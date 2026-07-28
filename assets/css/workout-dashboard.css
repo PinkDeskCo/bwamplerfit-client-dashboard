@@ -1,0 +1,719 @@
+/* ==================================================
+   Variables
+================================================== */
+
+:root {
+    --navy: #1f3a5f;
+    --navy-dark: #142841;
+
+    --ivory: #fbfaf3;
+    --white: #ffffff;
+
+    --pink: #e97fb2;
+    --pink-dark: #ce5f94;
+    --pink-light: #f7d8e7;
+
+    --text: #26384b;
+    --muted: #6c7886;
+
+    --border: rgba(31, 58, 95, 0.16);
+    --empty-square: #ebe9e2;
+
+    --shadow:
+        0 18px 45px rgba(31, 58, 95, 0.10);
+}
+
+
+/* ==================================================
+   Reset
+================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    color-scheme: light;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            var(--ivory) 100%
+        );
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+
+/* ==================================================
+   Main Dashboard
+================================================== */
+
+.workout-dashboard {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 56px 0 80px;
+}
+
+
+/* ==================================================
+   Header
+================================================== */
+
+.dashboard-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+
+    margin-bottom: 34px;
+}
+
+.dashboard-eyebrow,
+.section-eyebrow {
+    margin: 0 0 9px;
+
+    color: var(--pink-dark);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 500;
+    line-height: 0.95;
+}
+
+.dashboard-introduction {
+    max-width: 540px;
+    margin: 18px 0 0;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   Statistics
+================================================== */
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.stat-card {
+    min-width: 160px;
+    padding: 20px 22px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 26px rgba(31, 58, 95, 0.07);
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.stat-number {
+    color: var(--navy);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+
+/* ==================================================
+   Shared Sections
+================================================== */
+
+.activity-section,
+.heatmap-section {
+    padding: 30px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+}
+
+.activity-section {
+    margin-bottom: 24px;
+}
+
+
+/* ==================================================
+   Activity Form
+================================================== */
+
+.activity-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin-bottom: 25px;
+}
+
+.activity-heading h2,
+.heatmap-heading-row h2 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.date-control,
+.activity-field,
+.notes-field {
+    display: block;
+
+    color: var(--navy);
+
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.date-control > span:first-child,
+.activity-field > span:first-child,
+.notes-field > span:first-child {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.date-input-wrapper {
+    display: flex;
+    width: 190px;
+    padding: 9px 11px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.date-input-wrapper input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+
+    background: transparent;
+    color: var(--navy);
+
+    border: 0;
+}
+
+.activity-form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.activity-field input,
+.notes-field textarea {
+    width: 100%;
+
+    background: var(--white);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.activity-field input {
+    min-height: 44px;
+    padding: 10px 12px;
+}
+
+.input-with-unit {
+    display: flex;
+    align-items: center;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.input-with-unit input {
+    min-width: 0;
+
+    border: 0;
+}
+
+.input-with-unit span {
+    padding-right: 12px;
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.notes-field {
+    margin-top: 18px;
+}
+
+.notes-field textarea {
+    display: block;
+    padding: 12px;
+
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.activity-field input:focus,
+.notes-field textarea:focus,
+.date-input-wrapper:focus-within {
+    outline: 3px solid rgba(233, 127, 178, 0.25);
+    outline-offset: 1px;
+
+    border-color: var(--pink-dark);
+}
+
+.activity-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.save-entry-button,
+.clear-entry-button {
+    min-height: 44px;
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.save-entry-button {
+    background: var(--navy);
+    color: var(--white);
+
+    border: 1px solid var(--navy);
+}
+
+.save-entry-button:hover {
+    background: var(--navy-dark);
+}
+
+.clear-entry-button {
+    background: var(--white);
+    color: var(--navy);
+
+    border: 1px solid var(--border);
+}
+
+.clear-entry-button:hover {
+    border-color: var(--pink-dark);
+}
+
+.entry-message {
+    margin: 0 0 0 auto;
+
+    color: var(--muted);
+
+    font-size: 0.88rem;
+}
+
+/* ==================================================
+   Form Placeholders
+================================================== */
+
+.activity-field input::placeholder,
+.notes-field textarea::placeholder {
+    color: rgba(31, 58, 95, 0.38);
+    font-style: italic;
+    opacity: 1; /* Ensures consistent appearance across browsers */
+}
+
+/* ==================================================
+   Heatmap Heading
+================================================== */
+
+.heatmap-heading-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin-bottom: 28px;
+}
+
+.heatmap-heading-row p:not(.section-eyebrow) {
+    margin: 8px 0 0;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   Legend
+================================================== */
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+}
+
+.legend-square {
+    width: 14px;
+    height: 14px;
+
+    border: 1px solid rgba(31, 58, 95, 0.09);
+    border-radius: 3px;
+}
+
+
+/* ==================================================
+   Heatmap
+================================================== */
+
+.heatmap-scroll {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.heatmap-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    min-width: 950px;
+}
+
+.weekday-labels {
+    display: grid;
+    grid-template-rows: repeat(7, 14px);
+    row-gap: 4px;
+
+    padding-top: 27px;
+
+    color: var(--muted);
+
+    font-size: 0.68rem;
+}
+
+.weekday-labels span {
+    display: flex;
+    align-items: center;
+    height: 14px;
+}
+
+.heatmap-content {
+    flex: 1;
+}
+
+.month-labels {
+    position: relative;
+
+    height: 23px;
+    margin-bottom: 4px;
+
+    color: var(--muted);
+
+    font-size: 0.7rem;
+}
+
+.month-label {
+    position: absolute;
+    top: 0;
+}
+
+.heatmap-grid {
+    display: grid;
+
+    grid-template-rows: repeat(7, 14px);
+    grid-auto-flow: column;
+    grid-auto-columns: 14px;
+
+    gap: 4px;
+}
+
+
+/* ==================================================
+   Activity Levels
+================================================== */
+
+.level-0 {
+    background: var(--empty-square);
+}
+
+.level-1 {
+    background: #f8ddeb;
+}
+
+.level-2 {
+    background: #f2b8d5;
+}
+
+.level-3 {
+    background: var(--pink);
+}
+
+.level-4 {
+    background: var(--navy);
+}
+
+
+/* ==================================================
+   Heatmap Days
+================================================== */
+
+.heatmap-day {
+    width: 14px;
+    height: 14px;
+    padding: 0;
+
+    appearance: none;
+
+    border: 1px solid rgba(31, 58, 95, 0.09);
+    border-radius: 3px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 140ms ease,
+        transform 140ms ease;
+}
+
+.heatmap-day:hover {
+    transform: scale(1.25);
+
+    border-color: var(--navy);
+}
+
+.heatmap-day:focus-visible {
+    outline: 3px solid rgba(233, 127, 178, 0.35);
+    outline-offset: 2px;
+}
+
+.heatmap-day.is-today {
+    outline: 2px solid var(--navy);
+    outline-offset: 2px;
+}
+
+.heatmap-day.is-selected {
+    outline: 2px solid var(--pink-dark);
+    outline-offset: 2px;
+}
+
+.heatmap-day.is-future {
+    opacity: 0.28;
+
+    cursor: not-allowed;
+}
+
+.heatmap-day.is-future:hover {
+    transform: none;
+}
+
+
+/* ==================================================
+   Selected Day
+================================================== */
+
+.selected-day-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    margin-top: 22px;
+    padding: 18px 22px;
+
+    background: rgba(233, 127, 178, 0.08);
+
+    border-left: 4px solid var(--pink);
+    border-radius: 8px;
+}
+
+.selected-day-label {
+    margin: 0 0 5px;
+
+    color: var(--pink-dark);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.selected-day-date {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-weight: 700;
+}
+
+.selected-day-summary {
+    margin: 0;
+
+    color: var(--muted);
+
+    text-align: right;
+}
+
+
+/* ==================================================
+   Responsive
+================================================== */
+
+@media (max-width: 900px) {
+
+    .activity-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .workout-dashboard {
+        width: min(100% - 28px, 1180px);
+        padding-top: 34px;
+    }
+
+    .dashboard-header {
+        display: block;
+    }
+
+    .dashboard-stats {
+        margin-top: 28px;
+    }
+
+    .activity-heading,
+    .heatmap-heading-row {
+        display: block;
+    }
+
+    .date-control,
+    .heatmap-legend {
+        margin-top: 18px;
+    }
+
+    .entry-message {
+        width: 100%;
+        margin-left: 0;
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .dashboard-stats,
+    .activity-form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-card {
+        min-width: 0;
+        padding: 16px;
+    }
+
+    .activity-section,
+    .heatmap-section {
+        padding: 22px 18px;
+    }
+
+    .activity-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .date-input-wrapper {
+        width: 100%;
+    }
+
+    .save-entry-button,
+    .clear-entry-button {
+        width: 100%;
+    }
+
+    .selected-day-panel {
+        display: block;
+    }
+
+    .selected-day-summary {
+        margin-top: 10px;
+
+        text-align: left;
+    }
+
+}
