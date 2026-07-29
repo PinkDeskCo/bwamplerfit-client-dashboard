@@ -1,5 +1,5 @@
 /**
- * Workout Consistency Dashboard
+  * BWamplerFit Client Dashboard
  *
  * Records multiple activity sessions per day.
  * Each session remains separate while daily totals
