@@ -1317,6 +1317,18 @@
             background-color: rgba(233, 127, 178, 0.08);
         }
 
+        .settings-version {
+            margin-top: 2rem;
+            padding-top: 1rem;
+
+            border-top: 1px solid rgba(31, 58, 95, 0.08);
+
+            text-align: center;
+
+            font-size: 0.75rem;
+            color: #8a8a8a;
+        }
+
 
 /* ==================================================   
         RESPONSIVE

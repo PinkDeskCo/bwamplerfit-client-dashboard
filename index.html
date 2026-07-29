@@ -860,78 +860,82 @@
     </main>
 
     <dialog
-    class="settings-dialog"
-    id="settings-dialog"
->
+        class="settings-dialog"
+        id="settings-dialog"
+    >
 
-    <div class="settings-dialog-content">
+        <div class="settings-dialog-content">
 
-        <div class="settings-dialog-header">
+            <div class="settings-dialog-header">
 
-            <div>
-                <p class="section-eyebrow">
-                    Dashboard Controls
-                </p>
+                <div>
+                    <p class="section-eyebrow">
+                        Dashboard Controls
+                    </p>
 
-                <h2>
-                    Settings
-                </h2>
+                    <h2>
+                        Settings
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    class="close-settings-button"
+                    id="close-settings"
+                    aria-label="Close settings"
+                >
+                    ×
+                </button>
+
             </div>
 
-            <button
-                type="button"
-                class="close-settings-button"
-                id="close-settings"
-                aria-label="Close settings"
-            >
-                ×
-            </button>
+            <div class="settings-options">
+
+                <button
+                    type="button"
+                    class="settings-action-button settings-action-danger"
+                    id="reset-workout-history"
+                >
+                    Reset Workout History
+                </button>
+
+                <button
+                    type="button"
+                    class="settings-action-button settings-action-danger"
+                    id="reset-weight-progress"
+                >
+                    Reset Weight Progress
+                </button>
+
+                <button
+                    type="button"
+                    class="settings-action-button"
+                    disabled
+                >
+                    Export Data — Coming Soon
+                </button>
+
+                <button
+                    type="button"
+                    class="settings-action-button"
+                    disabled
+                >
+                    Import Data — Coming Soon
+                </button>
+
+            </div>
+
+            <p
+                class="settings-message"
+                id="settings-message"
+                aria-live="polite"
+            ></p>
+
+            <div class="settings-version">
+                Workout Dashboard • Version 1.0.1
+            </div>
 
         </div>
-
-        <div class="settings-options">
-
-            <button
-                type="button"
-                class="settings-action-button settings-action-danger"
-                id="reset-workout-history"
-            >
-                Reset Workout History
-            </button>
-
-            <button
-                type="button"
-                class="settings-action-button settings-action-danger"
-                id="reset-weight-progress"
-            >
-                Reset Weight Progress
-            </button>
-
-            <button
-                type="button"
-                class="settings-action-button"
-                disabled
-            >
-                Export Data — Coming Soon
-            </button>
-
-            <button
-                type="button"
-                class="settings-action-button"
-                disabled
-            >
-                Import Data — Coming Soon
-            </button>
-
-        </div>
-
-        <p
-            class="settings-message"
-            id="settings-message"
-            aria-live="polite"
-        ></p>
-
-    </div>
 
     </dialog>
 
