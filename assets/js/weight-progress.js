@@ -747,13 +747,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     String(Math.round(percentage))
                 );
 
-
                 if (currentWeight === null) {
                     progressStatus.textContent =
                         'Record your current weight to begin.';
 
                     progressBarCurrent.textContent =
                         'Current weight not recorded';
+
+                    const summaryCurrentWeight =
+                        document.getElementById(
+                            'summary-current-weight'
+                        );
+
+                    const summaryWeightChange =
+                        document.getElementById(
+                            'summary-weight-change'
+                        );
+
+                    if (summaryCurrentWeight) {
+                        summaryCurrentWeight.textContent =
+                            '--';
+                    }
+
+                    if (summaryWeightChange) {
+                        summaryWeightChange.textContent =
+                            '--';
+                    }
 
                     return;
                 }
