@@ -1288,6 +1288,40 @@
             font-size: 0.9rem;
         }
 
+/* ==================================================
+   FOOTER SETTINGS
+================================================== */
+
+        .settings-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+
+            padding: 18px 28px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .settings-footer p {
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .settings-footer button {
+            min-height: 40px;
+            padding: 9px 14px;
+
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .settings-footer button:hover {
+            background-color: rgba(233, 127, 178, 0.08);
+        }
+
 
 /* ==================================================   
         RESPONSIVE
