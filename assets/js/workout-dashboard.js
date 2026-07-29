@@ -79,6 +79,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectedSummaryElement =
         document.querySelector('#selected-day-summary');
 
+    const settingsDialog =
+        document.querySelector('#settings-dialog');
+
+    const openSettingsButton =
+        document.querySelector('#open-settings');
+
+    const closeSettingsButton =
+        document.querySelector('#close-settings');
+
+    const resetWorkoutButton =
+        document.querySelector('#reset-workout-history');
+
+    const settingsMessage =
+        document.querySelector('#settings-message');
+
 
     const requiredElements = {
         heatmapGrid,
@@ -1400,6 +1415,42 @@ document.addEventListener('DOMContentLoaded', function () {
         return streak;
     }
 
+ /* ==================================================
+        Settings
+ ================================================== */
+
+        function openSettings() {
+            settingsMessage.textContent = '';
+            settingsDialog.showModal();
+        }
+
+        function closeSettings() {
+            settingsDialog.close();
+        }
+
+        function resetWorkoutHistory() {
+
+            const confirmed = confirm(
+                'Reset all workout history? This cannot be undone.'
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            localStorage.removeItem(storageKey);
+
+            activityEntries = {};
+
+            buildHeatmap();
+
+            loadSelectedDate(entryDateInput.value);
+
+            updateStatistics();
+
+            settingsMessage.textContent =
+                'Workout history has been reset.';
+        }
 
     /* ==================================================
        Events
@@ -1432,6 +1483,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
+              
 
     /* ==================================================
        Initialize
