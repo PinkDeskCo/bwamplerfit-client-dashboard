@@ -1292,31 +1292,6 @@
    FOOTER SETTINGS
 ================================================== */
 
-        .dashboard-footer {
-            margin-top: 2rem;
-            padding-top: 1rem;
-            text-align: center;
-            border-top: 1px solid rgba(31, 58, 95, 0.08);
-        }
-
-        .dashboard-footer p {
-            margin: 0;
-            font-size: 0.75rem;
-            color: #8a8a8a;
-        }
-
-        .dashboard-footer button {
-            min-height: 40px;
-            padding: 9px 14px;
-
-            border-radius: 8px;
-            font-weight: 700;
-        }
-
-        .dashboard-footer button:hover {
-            background-color: rgba(233, 127, 178, 0.08);
-        }
-
         .settings-version {
             margin-top: 2rem;
             padding-top: 1rem;
