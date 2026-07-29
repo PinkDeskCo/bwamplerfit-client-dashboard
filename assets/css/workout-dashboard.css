@@ -1293,21 +1293,16 @@
 ================================================== */
 
         .dashboard-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-
-            padding: 18px 28px;
-
-            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            border-top: 1px solid rgba(31, 58, 95, 0.08);
         }
 
         .dashboard-footer p {
             margin: 0;
-
-            color: var(--muted);
-            font-size: 0.82rem;
+            font-size: 0.75rem;
+            color: #8a8a8a;
         }
 
         .dashboard-footer button {
