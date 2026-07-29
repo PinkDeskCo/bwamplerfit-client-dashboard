@@ -1012,6 +1012,20 @@ document.addEventListener('DOMContentLoaded', function () {
             showEntryMessage('');
 
             entryDateInput.value = getTodayKey();
+
+            const summaryCurrentWeight =
+                document.querySelector('#summary-current-weight');
+
+            const summaryWeightChange =
+                document.querySelector('#summary-weight-change');
+
+            if (summaryCurrentWeight) {
+                summaryCurrentWeight.textContent = '--';
+            }
+
+            if (summaryWeightChange) {
+                summaryWeightChange.textContent = '--';
+            }
         }
     /* ==================================================
        Events
