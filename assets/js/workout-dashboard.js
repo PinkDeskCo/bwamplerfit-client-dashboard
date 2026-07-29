@@ -1483,7 +1483,43 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
-              
+    if (
+        openSettingsButton
+        && settingsDialog
+        && closeSettingsButton
+        ) {
+            openSettingsButton.addEventListener(
+                'click',
+                function () {
+                    settingsMessage.textContent = '';
+                    settingsDialog.showModal();
+                }
+            );
+
+            closeSettingsButton.addEventListener(
+                'click',
+                function () {
+                    settingsDialog.close();
+                }
+            );
+
+            settingsDialog.addEventListener(
+                'click',
+                function (event) {
+                    if (event.target === settingsDialog) {
+                        settingsDialog.close();
+                    }
+                }
+            );
+        }
+
+
+        if (resetWorkoutButton) {
+            resetWorkoutButton.addEventListener(
+                'click',
+                resetWorkoutHistory
+            );
+        }
 
     /* ==================================================
        Initialize

@@ -88,6 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const entryCount =
         document.querySelector('#weight-entry-count');
 
+    const resetWeightButton =
+        document.querySelector('#reset-weight-progress');
 
     const requiredElements = {
         goalSetup,
@@ -115,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
         remainingWeightDisplay,
         historyList,
         entryCount,
+        resetWeightButton,
     };
 
 
@@ -949,6 +952,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    function resetWeightProgress() {
+
+    const confirmed = confirm(
+        'Reset all weight progress? This cannot be undone.'
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(storageKey);
+
+    weightData = getEmptyWeightData();
+
+    goalSetup.hidden = false;
+    weightDashboard.hidden = true;
+
+    startingWeightInput.value = '';
+    goalWeightInput.value = '';
+    currentWeightInput.value = '';
+
+    showGoalMessage('');
+    showEntryMessage('');
+
+    entryDateInput.value = getTodayKey();
+}
     /* ==================================================
        Events
     ================================================== */
@@ -1000,7 +1029,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
+    if (resetWeightButton) {
 
+        resetWeightButton.addEventListener(
+            'click',
+            resetWeightProgress
+        );
+
+    }
     /* ==================================================
        Initialize
     ================================================== */
