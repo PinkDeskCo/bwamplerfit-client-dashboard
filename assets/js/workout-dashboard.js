@@ -154,9 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const storageKey =
             `workout-activity-${currentYear}`;
 
-        yearHeading.textContent =
-            currentYear;
-
 
     /* ==================================================
        Stored Data
