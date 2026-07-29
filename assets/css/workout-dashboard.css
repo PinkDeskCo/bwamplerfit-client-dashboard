@@ -81,6 +81,7 @@ textarea {
 
 .dashboard-header {
     position: relative; 
+    margin-bottom: 28px;
   
 }
 .settings-button {
@@ -202,6 +203,7 @@ textarea {
 .activity-section,
 .heatmap-section {
     padding: 30px;
+    margin-bottom:36px;
 
     background: var(--white);
 
