@@ -1671,3 +1671,4 @@ document.addEventListener('DOMContentLoaded', function () {
     buildHeatmap();
     setInitialDate();
 });
+

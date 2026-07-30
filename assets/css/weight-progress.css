@@ -2,609 +2,876 @@
    Weight Progress Section
 ================================================== */
 
-        .weight-progress-section {
-            margin-top: 40px;
-            margin-bottom: 36px;
-            padding: 34px;
+.weight-progress-section {
+    margin-top: 40px;
+    padding: 36px 38px;
 
-            background: #ffffff;
-            border: 1px solid rgba(31, 58, 95, 0.14);
-            border-radius: 20px;
-        }
+    background: var(--surface-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-large);
+
+    box-shadow: var(--shadow);
+}
 
 
 /* ==================================================
-   Header
+   Weight Progress Header
 ================================================== */
 
-        .weight-progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 24px;
+.weight-progress-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
 
-            margin-bottom: 28px;
-        }
+    margin-bottom: 30px;
+    padding-bottom: 24px;
 
-        .weight-progress-header h2 {
-            margin: 0;
-        }
+    border-bottom: 1px solid var(--border-color);
+}
 
-        .weight-progress-introduction {
-            max-width: 620px;
-            margin: 8px 0 0;
+.weight-progress-header h2 {
+    margin: 0;
 
-            color: rgba(31, 58, 95, 0.72);
-        }
+    color: var(--heading-color);
 
-        .edit-weight-goals-button {
-            flex-shrink: 0;
+    font-family:
+        "Outfit",
+        sans-serif;
 
-            padding: 11px 17px;
+    font-size: clamp(2rem, 4vw, 2.65rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
 
-            color: #1f3a5f;
-            background: transparent;
+.weight-progress-introduction {
+    max-width: 620px;
+    margin: 10px 0 0;
 
-            border: 1px solid rgba(31, 58, 95, 0.28);
-            border-radius: 10px;
+    color: var(--muted-text);
 
-            font: inherit;
-            font-weight: 600;
+    font-family:
+        "Nunito",
+        sans-serif;
 
-            cursor: pointer;
-        }
+    font-size: 0.96rem;
+    line-height: 1.6;
+}
 
-        .edit-weight-goals-button:hover {
-            border-color: #e97fb2;
-        }
+.edit-weight-goals-button {
+    flex-shrink: 0;
+
+    min-height: 46px;
+    padding: 10px 17px;
+
+    color: var(--heading-color);
+    background: var(--surface-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        transform 160ms ease;
+}
+
+.edit-weight-goals-button:hover {
+    color: var(--secondary-dark);
+    border-color: var(--secondary-color);
+
+    transform: translateY(-1px);
+}
+
+.edit-weight-goals-button:focus-visible {
+    outline: 3px solid rgba(239, 127, 143, 0.24);
+    outline-offset: 3px;
+}
 
 
 /* ==================================================
    Goal Setup
 ================================================== */
 
-        .weight-goal-setup {
-            padding: 24px;
+.weight-goal-setup {
+    padding: 28px;
 
-            background: #fbfaf3;
-            border: 1px solid rgba(31, 58, 95, 0.12);
-            border-radius: 16px;
-        }
+    background: var(--surface-soft);
 
-        .weight-goal-setup[hidden] {
-            display: none;
-        }
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-medium);
+}
 
-        .weight-goal-setup-heading h3 {
-            margin: 0;
-        }
+.weight-goal-setup[hidden] {
+    display: none;
+}
 
-        .weight-goal-setup-heading p {
-            margin: 6px 0 0;
+.weight-goal-setup-heading h3 {
+    margin: 0;
 
-            color: rgba(31, 58, 95, 0.68);
-        }
+    color: var(--heading-color);
 
-        .weight-goal-fields,
-        .weight-entry-fields {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+    font-family:
+        "Outfit",
+        sans-serif;
 
-            margin-top: 22px;
-        }
+    font-size: 1.45rem;
+    font-weight: 700;
+}
 
-        .weight-field {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+.weight-goal-setup-heading p {
+    max-width: 650px;
+    margin: 7px 0 0;
 
-            min-width: 0;
+    color: var(--muted-text);
 
-            color: #1f3a5f;
-            font-weight: 600;
-        }
+    line-height: 1.6;
+}
 
-        .weight-field > span:first-child {
-            font-size: 0.92rem;
-        }
+.weight-goal-fields,
+.weight-entry-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
 
-        .weight-input-with-unit {
-            display: flex;
-            align-items: center;
+    margin-top: 24px;
+}
 
-            min-width: 0;
 
-            background: #ffffff;
-            border: 1px solid rgba(31, 58, 95, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-        }
+/* ==================================================
+   Weight Fields
+================================================== */
 
-        .weight-input-with-unit input {
-            width: 100%;
-            min-width: 0;
-            padding: 13px 14px;
+.weight-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
 
-            color: #1f3a5f;
-            background: transparent;
+    min-width: 0;
 
-            border: 0;
-            outline: 0;
+    color: var(--heading-color);
 
-            font: inherit;
-        }
+    font-family:
+        "Outfit",
+        sans-serif;
 
-        .weight-input-with-unit > span {
-            padding: 13px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
 
-            color: rgba(31, 58, 95, 0.62);
-            background: rgba(31, 58, 95, 0.05);
+.weight-input-with-unit,
+.weight-date-wrapper {
+    display: flex;
+    align-items: center;
 
-            border-left: 1px solid rgba(31, 58, 95, 0.12);
-        }
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
 
-        .weight-input-with-unit:focus-within {
-            border-color: #e97fb2;
-            box-shadow: 0 0 0 3px rgba(233, 127, 178, 0.14);
-        }
+    background: var(--surface-color);
 
-        .weight-date-wrapper {
-            display: flex;
-            width: 100%;
-            min-width: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
 
-            padding: 12px 14px;
+    overflow: hidden;
 
-            background: #ffffff;
-            border: 1px solid rgba(31, 58, 95, 0.2);
-            border-radius: 10px;
-        }
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
 
-        .weight-date-wrapper input {
-            display: block;
+.weight-input-with-unit input,
+.weight-date-wrapper input {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 11px 14px;
 
-            width: 100%;
-            min-width: 0;
-            padding: 0;
+    color: var(--text-color);
+    background: transparent;
 
-            color: #1f3a5f;
-            background: transparent;
+    border: 0;
+    outline: 0;
 
-            border: 0;
-            outline: 0;
+    font-family:
+        "Nunito",
+        sans-serif;
 
-            font: inherit;
-        }
+    font-size: 0.95rem;
+    font-weight: 600;
+}
 
-        .weight-date-wrapper:focus-within {
-            border-color: #e97fb2;
-            box-shadow: 0 0 0 3px rgba(233, 127, 178, 0.14);
-        }
+.weight-input-with-unit > span {
+    align-self: stretch;
 
-        .weight-goal-actions,
-        .weight-entry-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+    display: flex;
+    align-items: center;
 
-            margin-top: 20px;
-        }
+    padding: 0 14px;
 
-        .save-weight-goals-button,
-        .save-weight-entry-button {
-            padding: 13px 20px;
+    color: var(--muted-text);
+    background: rgba(239, 127, 143, 0.08);
 
-            color: #ffffff;
-            background: #1f3a5f;
+    border-left: 1px solid var(--border-color);
 
-            border: 0;
-            border-radius: 10px;
+    font-family:
+        "Nunito",
+        sans-serif;
 
-            font: inherit;
-            font-weight: 700;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
 
-            cursor: pointer;
-        }
+.weight-input-with-unit:hover,
+.weight-date-wrapper:hover {
+    border-color: rgba(239, 127, 143, 0.42);
+}
 
-        .save-weight-goals-button:hover,
-        .save-weight-entry-button:hover {
-            background: #172f4f;
-        }
+.weight-input-with-unit:focus-within,
+.weight-date-wrapper:focus-within {
+    background: var(--surface-color);
+    border-color: var(--primary-color);
 
-        .weight-goal-message,
-        .weight-entry-message {
-            margin: 0;
+    box-shadow:
+        0 0 0 4px rgba(239, 127, 143, 0.14);
+}
 
-            color: #1f3a5f;
-        }
+
+/* ==================================================
+   Weight Actions
+================================================== */
+
+.weight-goal-actions,
+.weight-entry-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    margin-top: 24px;
+    padding-top: 24px;
+
+    border-top: 1px solid var(--border-color);
+}
+
+.save-weight-goals-button,
+.save-weight-entry-button {
+    min-height: 48px;
+    padding: 11px 20px;
+
+    color: #ffffff;
+    background: var(--primary-color);
+
+    border: 1px solid var(--primary-color);
+    border-radius: var(--radius-small);
+
+    box-shadow:
+        0 10px 24px rgba(216, 93, 115, 0.20);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+}
+
+.save-weight-goals-button:hover,
+.save-weight-entry-button:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+
+    box-shadow:
+        0 14px 30px rgba(216, 93, 115, 0.28);
+
+    transform: translateY(-1px);
+}
+
+.save-weight-goals-button:focus-visible,
+.save-weight-entry-button:focus-visible {
+    outline: 3px solid rgba(239, 127, 143, 0.24);
+    outline-offset: 3px;
+}
+
+.weight-goal-message,
+.weight-entry-message {
+    margin: 0;
+
+    color: var(--muted-text);
+
+    font-size: 0.88rem;
+    font-weight: 600;
+}
 
 
 /* ==================================================
    Dashboard
 ================================================== */
 
-        .weight-dashboard[hidden] {
-            display: none;
-        }
+.weight-dashboard[hidden] {
+    display: none;
+}
 
 
 /* ==================================================
    Progress Overview
 ================================================== */
 
-        .weight-progress-overview {
-            display: grid;
-            grid-template-columns: 230px minmax(0, 1fr);
-            gap: 34px;
-            align-items: center;
+.weight-progress-overview {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 38px;
+    align-items: center;
 
-            padding: 30px;
+    padding: 32px;
 
-            background: #fbfaf3;
-            border: 1px solid rgba(31, 58, 95, 0.12);
-            border-radius: 18px;
-        }
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(245, 154, 61, 0.10),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(239, 127, 143, 0.12),
+            transparent 42%
+        ),
+        var(--surface-soft);
 
-        .weight-progress-circle-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-medium);
+}
 
-        .weight-progress-circle {
-            --weight-progress: 0deg;
 
-            display: grid;
-            place-items: center;
+/* ==================================================
+   Progress Circle
+================================================== */
 
-            width: 190px;
-            height: 190px;
+.weight-progress-circle-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-            background:
-                conic-gradient(
-                    #e97fb2 var(--weight-progress),
-                    rgba(31, 58, 95, 0.1) var(--weight-progress)
-                );
+.weight-progress-circle {
+    --weight-progress: 0deg;
 
-            border-radius: 50%;
-        }
+    display: grid;
+    place-items: center;
 
-        .weight-progress-circle::before {
-            content: "";
+    width: 190px;
+    height: 190px;
 
-            grid-area: 1 / 1;
+    background:
+        conic-gradient(
+            var(--primary-color) var(--weight-progress),
+            rgba(239, 127, 143, 0.14) var(--weight-progress)
+        );
 
-            width: 146px;
-            height: 146px;
+    border-radius: 50%;
 
-            background: #ffffff;
-            border-radius: 50%;
-        }
+    box-shadow:
+        0 16px 34px rgba(216, 93, 115, 0.14);
+}
 
-        .weight-progress-circle-center {
-            position: relative;
-            z-index: 1;
+.weight-progress-circle::before {
+    content: "";
 
-            grid-area: 1 / 1;
+    grid-area: 1 / 1;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
+    width: 146px;
+    height: 146px;
 
-            color: #1f3a5f;
-            text-align: center;
-        }
+    background: var(--surface-color);
 
-        .weight-progress-circle-center strong {
-            font-size: 2.2rem;
-            line-height: 1;
-        }
+    border-radius: 50%;
 
-        .weight-progress-circle-center span {
-            color: rgba(31, 58, 95, 0.66);
-            font-size: 0.86rem;
-        }
+    box-shadow:
+        inset 0 0 0 1px var(--border-color);
+}
 
-        .weight-progress-status {
-            margin: 16px 0 0;
+.weight-progress-circle-center {
+    position: relative;
+    z-index: 1;
 
-            color: rgba(31, 58, 95, 0.72);
-            text-align: center;
-        }
+    grid-area: 1 / 1;
 
-        .weight-summary-area {
-            min-width: 0;
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 
-        .weight-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 12px;
-        }
+    color: var(--heading-color);
+    text-align: center;
+}
 
-        .weight-summary-card {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+.weight-progress-circle-center strong {
+    font-family:
+        "Outfit",
+        sans-serif;
 
-            min-width: 0;
-            padding: 17px;
+    font-size: 2.45rem;
+    font-weight: 700;
+    line-height: 1;
+}
 
-            background: #ffffff;
-            border: 1px solid rgba(31, 58, 95, 0.12);
-            border-radius: 12px;
-        }
+.weight-progress-circle-center span {
+    color: var(--muted-text);
 
-        .weight-summary-label {
-            color: rgba(31, 58, 95, 0.64);
-            font-size: 0.78rem;
-        }
+    font-size: 0.82rem;
+    font-weight: 600;
+}
 
-        .weight-summary-value {
-            color: #1f3a5f;
-            font-size: 1.18rem;
-        }
+.weight-progress-status {
+    max-width: 210px;
+    margin: 18px 0 0;
+
+    color: var(--muted-text);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+/* ==================================================
+   Weight Summary
+================================================== */
+
+.weight-summary-area {
+    min-width: 0;
+}
+
+.weight-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.weight-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+    padding: 18px;
+
+    background: var(--surface-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+
+    box-shadow:
+        0 8px 20px rgba(66, 48, 45, 0.04);
+}
+
+.weight-summary-label {
+    color: var(--muted-text);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.weight-summary-value {
+    color: var(--heading-color);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
 
 
 /* ==================================================
    Progress Bar
 ================================================== */
 
-        .weight-progress-bar-area {
-            margin-top: 27px;
-        }
+.weight-progress-bar-area {
+    margin-top: 30px;
+}
 
-        .weight-progress-bar-labels {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
+.weight-progress-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 
-            margin-bottom: 8px;
+    margin-bottom: 10px;
 
-            color: rgba(31, 58, 95, 0.72);
-            font-size: 0.82rem;
-        }
+    color: var(--muted-text);
 
-        .weight-progress-bar {
-            width: 100%;
-            height: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
 
-            background: rgba(31, 58, 95, 0.11);
-            border-radius: 999px;
-            overflow: hidden;
-        }
+.weight-progress-bar {
+    width: 100%;
+    height: 14px;
 
-        .weight-progress-bar-fill {
-            width: 0;
-            height: 100%;
+    background: rgba(239, 127, 143, 0.14);
 
-            background: #e97fb2;
-            border-radius: inherit;
+    border-radius: 999px;
 
-            transition: width 350ms ease;
-        }
+    overflow: hidden;
 
-        .weight-progress-bar-current {
-            margin: 9px 0 0;
+    box-shadow:
+        inset 0 1px 2px rgba(66, 48, 45, 0.08);
+}
 
-            color: #1f3a5f;
-            font-size: 0.88rem;
-            text-align: center;
-        }
+.weight-progress-bar-fill {
+    width: 0;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary-color),
+            var(--secondary-color)
+        );
+
+    border-radius: inherit;
+
+    transition: width 350ms ease;
+}
+
+.weight-progress-bar-current {
+    margin: 10px 0 0;
+
+    color: var(--heading-color);
+
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+}
 
 
 /* ==================================================
    Weight Entry
 ================================================== */
 
-        .weight-entry-panel,
-        .weight-history-panel {
-            margin-top: 24px;
-            padding: 24px;
+.weight-entry-panel,
+.weight-history-panel {
+    margin-top: 28px;
+    padding-top: 28px;
 
-            border: 1px solid rgba(31, 58, 95, 0.12);
-            border-radius: 16px;
-        }
+    border-top: 1px solid var(--border-color);
+}
 
-        .weight-entry-heading h3,
-        .weight-history-heading h3 {
-            margin: 0;
-        }
+.weight-entry-heading h3,
+.weight-history-heading h3 {
+    margin: 0;
 
-        .weight-entry-heading p,
-        .weight-history-heading p {
-            margin: 6px 0 0;
+    color: var(--heading-color);
 
-            color: rgba(31, 58, 95, 0.67);
-        }
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.weight-entry-heading p,
+.weight-history-heading p {
+    max-width: 650px;
+    margin: 7px 0 0;
+
+    color: var(--muted-text);
+
+    line-height: 1.6;
+}
+
+.weight-entry-fields {
+    margin-top: 22px;
+}
 
 
-/* ==========================================
-   Weight Tracker Input Placeholders
-========================================== */
+/* ==================================================
+   Form Placeholders
+================================================== */
 
-        .weight-progress-section input::placeholder {
-            color:  #d1d5db;
-            font-style: italic;
-            font-weight: 400;
-            opacity: 1; /* Firefox */
-        }
+.weight-progress-section input::placeholder {
+    color: var(--muted-text);
 
-        .weight-progress-section input::-webkit-input-placeholder {
-            color:  #d1d5db;
-            font-style: italic;
-            font-weight: 400;
-        }
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.65;
+}
 
-        .weight-progress-section input::-moz-placeholder {
-            color:  #d1d5db;
-            font-style: italic;
-            font-weight: 400;
-            opacity: 1;
-        }
-
-        .weight-progress-section input:-ms-input-placeholder {
-            color:  #d1d5db;
-            font-style: italic;
-            font-weight: 400;
-        }
 
 /* ==================================================
    Weight History
 ================================================== */
 
-        .weight-history-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 20px;
-        }
+.weight-history-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-        #weight-entry-count {
-            flex-shrink: 0;
+#weight-entry-count {
+    flex-shrink: 0;
 
-            color: rgba(31, 58, 95, 0.65);
-            font-size: 0.88rem;
-        }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-        .weight-history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+    min-height: 32px;
+    padding: 6px 11px;
 
-            margin-top: 20px;
-        }
+    color: var(--secondary-dark);
+    background: var(--secondary-light);
 
-        .weight-history-item {
-            display: grid;
-            grid-template-columns:
-                minmax(140px, 1fr)
-                minmax(100px, auto)
-                minmax(120px, auto)
-                auto;
-            gap: 18px;
-            align-items: center;
+    border-radius: 999px;
 
-            padding: 14px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
 
-            background: #fbfaf3;
-            border: 1px solid rgba(31, 58, 95, 0.1);
-            border-radius: 11px;
-        }
+.weight-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-        .weight-history-date {
-            color: #1f3a5f;
-            font-weight: 600;
-        }
+    margin-top: 20px;
+}
 
-        .weight-history-weight {
-            color: #1f3a5f;
-            font-weight: 700;
-        }
+.weight-history-item {
+    display: grid;
+    grid-template-columns:
+        minmax(150px, 1fr)
+        minmax(100px, auto)
+        minmax(120px, auto)
+        auto;
+    gap: 18px;
+    align-items: center;
 
-        .weight-history-change {
-            color: rgba(31, 58, 95, 0.7);
-            font-size: 0.88rem;
-        }
+    padding: 15px 17px;
 
-        .delete-weight-entry-button {
-            padding: 7px 11px;
+    background: var(--surface-soft);
 
-            color: #1f3a5f;
-            background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
 
-            border: 1px solid rgba(31, 58, 95, 0.2);
-            border-radius: 8px;
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        transform 160ms ease;
+}
 
-            font: inherit;
-            font-size: 0.82rem;
+.weight-history-item:hover {
+    background: var(--surface-color);
+    border-color: rgba(239, 127, 143, 0.34);
 
-            cursor: pointer;
-        }
+    transform: translateY(-1px);
+}
 
-        .delete-weight-entry-button:hover {
-            color: #ffffff;
-            background: #1f3a5f;
-        }
+.weight-history-date {
+    color: var(--heading-color);
 
-        .no-weight-entries-message {
-            margin: 0;
+    font-weight: 700;
+}
 
-            color: rgba(31, 58, 95, 0.64);
-        }
+.weight-history-weight {
+    color: var(--heading-color);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.weight-history-change {
+    color: var(--muted-text);
+
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.delete-weight-entry-button {
+    min-height: 36px;
+    padding: 7px 12px;
+
+    color: var(--heading-color);
+    background: transparent;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        background 160ms ease,
+        border-color 160ms ease;
+}
+
+.delete-weight-entry-button:hover {
+    color: #ffffff;
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.delete-weight-entry-button:focus-visible {
+    outline: 3px solid rgba(239, 127, 143, 0.24);
+    outline-offset: 3px;
+}
+
+
+/* ==================================================
+   Weight History Empty State
+================================================== */
+
+.no-weight-entries-message {
+    margin: 0;
+    padding: 22px 24px;
+
+    color: var(--muted-text);
+    background: var(--surface-soft);
+
+    border: 1px dashed rgba(239, 127, 143, 0.35);
+    border-radius: var(--radius-medium);
+
+    line-height: 1.6;
+}
 
 
 /* ==================================================
    Responsive
 ================================================== */
 
-        @media (max-width: 900px) {
+@media (max-width: 1000px) {
 
-            .weight-progress-overview {
-                grid-template-columns: 1fr;
-            }
+    .weight-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-            .weight-summary-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-        }
+}
 
 
-        @media (max-width: 680px) {
+@media (max-width: 900px) {
 
-            .weight-progress-section {
-                padding: 22px;
-            }
+    .weight-progress-overview {
+        grid-template-columns: 1fr;
+    }
 
-            .weight-progress-header {
-                flex-direction: column;
-            }
-
-            .weight-goal-fields,
-            .weight-entry-fields {
-                grid-template-columns: 1fr;
-            }
-
-            .weight-goal-actions,
-            .weight-entry-actions {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .weight-history-item {
-                grid-template-columns: 1fr auto;
-                gap: 8px 14px;
-            }
-
-            .weight-history-change {
-                grid-column: 1 / 2;
-            }
-
-            .delete-weight-entry-button {
-                grid-column: 2;
-                grid-row: 1 / 3;
-            }
-
-        }
+}
 
 
-        @media (max-width: 450px) {
+@media (max-width: 700px) {
 
-            .weight-summary-grid {
-                grid-template-columns: 1fr;
-            }
+    .weight-progress-section {
+        padding: 28px 24px;
+    }
 
-            .weight-progress-circle {
-                width: 170px;
-                height: 170px;
-            }
+    .weight-progress-header {
+        display: block;
+    }
 
-            .weight-progress-circle::before {
-                width: 130px;
-                height: 130px;
-            }
+    .edit-weight-goals-button {
+        margin-top: 20px;
+    }
 
-        }
+    .weight-goal-fields,
+    .weight-entry-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .weight-history-item {
+        grid-template-columns: 1fr auto;
+        gap: 8px 14px;
+    }
+
+    .weight-history-change {
+        grid-column: 1;
+    }
+
+    .delete-weight-entry-button {
+        grid-column: 2;
+        grid-row: 1 / 3;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .weight-progress-section {
+        padding: 24px 18px;
+    }
+
+    .weight-progress-overview {
+        padding: 24px 18px;
+    }
+
+    .weight-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .weight-progress-circle {
+        width: 170px;
+        height: 170px;
+    }
+
+    .weight-progress-circle::before {
+        width: 130px;
+        height: 130px;
+    }
+
+    .weight-goal-actions,
+    .weight-entry-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .save-weight-goals-button,
+    .save-weight-entry-button {
+        width: 100%;
+    }
+
+    .weight-goal-message,
+    .weight-entry-message {
+        width: 100%;
+    }
+
+    .weight-history-heading {
+        align-items: flex-start;
+    }
+
+}

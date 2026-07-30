@@ -40,15 +40,16 @@
 
         <section class="dashboard-hero">
 
-                <header class="dashboard-header">
-
+                 <header class="dashboard-header">
+                    
                     <div>
-
-                        <img
-                                class="dashboard-logo"
-                                src="assets/images/bwamplerfit-logo.png"
-                                alt="BWamplerFit"
-                        >
+                       <div class="hero-logo-wrapper">
+                            <img
+                                    class="dashboard-logo"
+                                    src="assets/images/bwamplerfit-logo.png"
+                                    alt="BWamplerFit"
+                            >
+                        </div>
 
                         <h1 id="dashboard-year">
                             Welcome Back
@@ -57,7 +58,25 @@
                         <p class="dashboard-introduction">
                             Every workout matters. The small choices you make today build the stronger woman you are becoming.
                         </p>
+
+                        <div class="dashboard-quote">
+
+                        <p class="dashboard-quote-label">
+                            A Note from Coach Bobbie
+                        </p>
+
+                        <blockquote
+                            class="dashboard-quote-text"
+                            id="daily-quote"
+                        ></blockquote>
+
+                        <p class="dashboard-quote-signature">
+                            — Bobbie 
+                        </p>
+
+                        </div>
                     </div>
+
 
                     <button
                         id="open-settings"
@@ -100,6 +119,7 @@
 
                 </header>
 
+              
                 <section class="heatmap-section"
                     aria-labelledby="heatmap-heading"
                     >
@@ -957,6 +977,7 @@
 
     <script src="assets/js/workout-dashboard.js?v=1.0.1"></script>
     <script src="assets/js/weight-progress.js?v=1.0.1"></script>
+    <script src="assets/js/dashboard-hero.js"></script>
 
 </body>
 </html>
