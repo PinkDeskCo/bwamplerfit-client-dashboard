@@ -13,30 +13,196 @@
       <!-- Google Fonts -->
 
             <link rel="preconnect" href="https://fonts.googleapis.com">
-
-            <link rel="preconnect"
-                href="https://fonts.gstatic.com"
-                crossorigin>
-
-            <link
-                href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
-                rel="stylesheet"
-            >
-
-            <link
-                rel="stylesheet"
-                href="assets/css/workout-dashboard.css"
-            >
-
-            <link
-                rel="stylesheet"
-                href="assets/css/weight-progress.css"
-            >
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="assets/css/workout-dashboard.css">
+            <link  rel="stylesheet" href="assets/css/weight-progress.css">
+            <link rel="stylesheet" href="assets/css/member-hub.css">
 </head>
 
 <body>
 
     <main class="workout-dashboard">
+
+        <!-- ==========================================
+            Member challenges and rewards
+        =========================================== -->
+
+        <section
+            class="member-hub"
+            id="member-hub"
+            aria-labelledby="member-hub-title"
+        >
+            <header class="member-hub__header">
+                <div>
+                    <p class="member-hub__eyebrow">
+                        Your BWamplerFit home
+                    </p>
+
+                    <h2 id="member-hub-title">
+                        Your challenges. Your accomplishments.
+                    </h2>
+
+                    <p class="member-hub__intro">
+                        Pick up where you left off and see
+                        the rewards you’ve earned along the way.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="member-hub__button member-hub__button--secondary"
+                    id="member-signout"
+                    hidden
+                >
+                    Sign out
+                </button>
+            </header>
+
+            <!-- Sign in with an existing challenge account -->
+
+            <div id="member-login">
+                <p>
+                    Sign in using the same email and password
+                    you use for your monthly challenges.
+                </p>
+
+                <form id="member-login-form" class="member-login-form">
+                    <div>
+                        <label for="member-email">
+                            Email address
+                        </label>
+
+                        <input
+                            id="member-email"
+                            type="email"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="member-password">
+                            Password
+                        </label>
+
+                        <input
+                            id="member-password"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <label class="member-password-toggle">
+                        <input
+                            id="member-show-password"
+                            type="checkbox"
+                        >
+                        Show password
+                    </label>
+
+                    <button
+                        id="member-signin"
+                        class="member-hub__button"
+                        type="submit"
+                    >
+                        Sign in
+                    </button>
+                </form>
+            </div>
+
+            <p
+                id="member-message"
+                class="member-hub__message"
+                role="status"
+                aria-live="polite"
+            ></p>
+
+            <!-- Signed-in member content -->
+
+            <div id="member-content" hidden>
+                <div class="member-hub__account">
+                    <p>
+                        Signed in as
+                        <strong id="member-account-email"></strong>
+                    </p>
+
+                    <button
+                        id="member-refresh"
+                        type="button"
+                        class="member-hub__button member-hub__button--secondary"
+                    >
+                        Refresh progress
+                    </button>
+                </div>
+
+                <section
+                    class="member-hub__section"
+                    aria-labelledby="member-challenges-title"
+                >
+                    <div class="member-hub__section-heading">
+                        <div>
+                            <p class="member-hub__eyebrow">
+                                Keep showing up
+                            </p>
+
+                            <h3 id="member-challenges-title">
+                                My Challenges
+                            </h3>
+                        </div>
+
+                        <span
+                            id="member-challenge-count"
+                            class="member-hub__count"
+                        ></span>
+                    </div>
+
+                    <div
+                        id="member-challenges"
+                        class="member-challenge-grid"
+                    ></div>
+                </section>
+
+                <section
+                    class="member-hub__section"
+                    aria-labelledby="member-rewards-title"
+                >
+                    <div class="member-hub__section-heading">
+                        <div>
+                            <p class="member-hub__eyebrow">
+                                Every effort adds up
+                            </p>
+
+                            <h3 id="member-rewards-title">
+                                My Rewards
+                            </h3>
+                        </div>
+
+                        <span
+                            id="member-reward-count"
+                            class="member-hub__count"
+                        ></span>
+                    </div>
+
+                    <p class="member-hub__intro">
+                        Your earned rewards from monthly challenges,
+                        collected in one place.
+                    </p>
+
+                    <div
+                        id="member-rewards"
+                        class="member-reward-grid"
+                    ></div>
+                </section>
+            </div>
+
+            <p class="member-hub__storage-note">
+                Monthly challenge progress and rewards follow your account.
+                The yearly activity and weight trackers below currently
+                save separately in this browser.
+            </p>
+        </section>
 
         <section class="dashboard-hero">
 
@@ -974,7 +1140,9 @@
 
     </dialog>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/member-hub.js"></script>
     <script src="assets/js/workout-dashboard.js?v=1.0.1"></script>
     <script src="assets/js/weight-progress.js?v=1.0.1"></script>
     <script src="assets/js/dashboard-hero.js"></script>
