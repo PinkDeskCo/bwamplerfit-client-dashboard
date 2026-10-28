@@ -145,123 +145,170 @@ document.addEventListener('DOMContentLoaded', function () {
        Storage
     ================================================== */
 
-            const storageKey =
-                'workout-dashboard-weight-progress';
+        let weightData = getEmptyWeightData();
+        let weightUserId = null;
+        let weightVersion = 0;
+        let weightReady = false;
+        let weightBusy = false;
 
-            let weightData =
-                loadWeightData();
+        function getEmptyWeightData() {
+            return {
+                startingWeight: null,
+                goalWeight: null,
+                entries: []
+            };
+        }
 
+        function updateWeightControls() {
+            const disabled = !weightReady || weightBusy;
 
-            function getEmptyWeightData() {
-                return {
-                    startingWeight: null,
-                    goalWeight: null,
-                    entries: [],
-                };
+            saveGoalsButton.disabled = disabled;
+            saveEntryButton.disabled = disabled;
+            editGoalsButton.disabled = disabled;
+            resetWeightButton.disabled = disabled;
+        }
+
+        function displayWeightData() {
+            startingWeightInput.value = weightData.startingWeight ?? "";
+            goalWeightInput.value = weightData.goalWeight ?? "";
+
+            goalSetup.hidden = !weightReady || hasWeightGoals();
+            weightDashboard.hidden = !weightReady || !hasWeightGoals();
+
+            renderWeightTracker();
+            updateWeightControls();
+        }
+
+        async function loadAccountWeight(userId) {
+            const version = ++weightVersion;
+
+            weightUserId = userId || null;
+            weightReady = false;
+            weightData = getEmptyWeightData();
+
+            currentWeightInput.value = "";
+            entryDateInput.value = getTodayKey();
+            showEntryMessage("");
+            displayWeightData();
+
+            if (!userId) {
+                showGoalMessage("Sign in to use your weight tracker.");
+                return;
             }
 
+            showGoalMessage("Loading your weight tracker…");
 
-            function loadWeightData() {
-                try {
-                    const storedValue =
-                        localStorage.getItem(storageKey);
+            try {
+                const { data: goals, error: goalsError } =
+                    await supabaseClient
+                        .from("member_weight_goals")
+                        .select("starting_weight, goal_weight")
+                        .eq("user_id", userId)
+                        .maybeSingle();
 
-                    if (!storedValue) {
-                        return getEmptyWeightData();
+                if (version !== weightVersion) return;
+                if (goalsError) throw goalsError;
+
+                const entries = [];
+                let offset = 0;
+                const pageSize = 500;
+
+                while (true) {
+                    const { data, error } = await supabaseClient
+                        .from("member_weight_entries")
+                        .select("entry_date, weight")
+                        .eq("user_id", userId)
+                        .order("entry_date")
+                        .range(offset, offset + pageSize - 1);
+
+                    if (version !== weightVersion) return;
+                    if (error) throw error;
+
+                    for (const row of data || []) {
+                        entries.push({
+                            id: row.entry_date,
+                            date: row.entry_date,
+                            weight: Number(row.weight)
+                        });
                     }
 
-                    const parsedValue =
-                        JSON.parse(storedValue);
+                    if ((data || []).length < pageSize) break;
+                    offset += pageSize;
+                }
 
-                    return normalizeWeightData(parsedValue);
+                weightData = {
+                    startingWeight: goals
+                        ? Number(goals.starting_weight)
+                        : null,
+                    goalWeight: goals
+                        ? Number(goals.goal_weight)
+                        : null,
+                    entries
+                };
 
-                } catch (error) {
-                    console.error(
-                        'Weight data could not be loaded.',
-                        error
-                    );
+                weightReady = true;
+                displayWeightData();
+                showGoalMessage("");
+            } catch (error) {
+                if (version !== weightVersion) return;
 
-                    return getEmptyWeightData();
+                console.error("Weight tracker load failed:", error);
+                showGoalMessage(
+                    "Your weight tracker could not be loaded. Refresh to retry."
+                );
+            } finally {
+                if (version === weightVersion) {
+                    updateWeightControls();
                 }
             }
+        }
 
-
-            function normalizeWeightData(data) {
-                const normalized =
-                    getEmptyWeightData();
-
-                if (
-                    !data
-                    || typeof data !== 'object'
-                    || Array.isArray(data)
-                ) {
-                    return normalized;
-                }
-
-
-                normalized.startingWeight =
-                    sanitizeWeight(data.startingWeight);
-
-                normalized.goalWeight =
-                    sanitizeWeight(data.goalWeight);
-
-
-                if (Array.isArray(data.entries)) {
-                    normalized.entries =
-                        data.entries
-                            .map(function (entry) {
-                                return {
-                                    id:
-                                        entry.id
-                                        || createEntryId(),
-
-                                    date:
-                                        typeof entry.date === 'string'
-                                            ? entry.date
-                                            : '',
-
-                                    weight:
-                                        sanitizeWeight(
-                                            entry.weight
-                                        ),
-                                };
-                            })
-                            .filter(function (entry) {
-                                return (
-                                    entry.date
-                                    && entry.weight !== null
-                                );
-                            });
-                }
-
-
-                return normalized;
+        async function runWeightChange(
+            operation,
+            applyChange,
+            messageElement,
+            successMessage
+        ) {
+            if (!weightReady || weightBusy || !weightUserId) {
+                messageElement.textContent = weightBusy
+                    ? "Please wait for the current change to finish."
+                    : "Your weight tracker must finish loading first.";
+                return;
             }
 
+            const userId = weightUserId;
+            const version = weightVersion;
 
-            function saveWeightData() {
-                try {
-                    localStorage.setItem(
-                        storageKey,
-                        JSON.stringify(weightData)
-                    );
+            weightBusy = true;
+            updateWeightControls();
+            messageElement.textContent = "Saving…";
 
-                    return true;
+            try {
+                await operation(userId);
 
-                } catch (error) {
-                    console.error(
-                        'Weight data could not be saved.',
-                        error
-                    );
+                if (version !== weightVersion) return;
 
-                    showEntryMessage(
-                        'Your weight data could not be saved.'
-                    );
+                applyChange();
+                displayWeightData();
+                messageElement.textContent = successMessage;
+            } catch (error) {
+                if (version !== weightVersion) return;
 
-                    return false;
+                console.error("Weight change failed:", error);
+
+                // Reload in case a reset completed only part of its work.
+                await loadAccountWeight(userId);
+
+                if (weightUserId === userId) {
+                    goalMessage.textContent =
+                        "The change could not be completed. " +
+                        "Review the reloaded records before trying again.";
                 }
+            } finally {
+                weightBusy = false;
+                updateWeightControls();
             }
-
+        }
 
     /* ==================================================
        Helpers
@@ -497,57 +544,56 @@ document.addEventListener('DOMContentLoaded', function () {
        Goal Setup
     ================================================== */
 
-            function saveGoals() {
-                const startingWeight =
-                    sanitizeWeight(
-                        startingWeightInput.value
-                    );
+          async function saveGoals(event) {
+            event?.preventDefault();
 
-                const goalWeight =
-                    sanitizeWeight(
-                        goalWeightInput.value
-                    );
+            const startingWeight =
+                sanitizeWeight(startingWeightInput.value);
 
+            const goalWeight =
+                sanitizeWeight(goalWeightInput.value);
 
-                if (
-                    startingWeight === null
-                    || goalWeight === null
-                ) {
-                    showGoalMessage(
-                        'Enter a valid starting weight and goal weight.'
-                    );
-
-                    return;
-                }
-
-
-                if (startingWeight === goalWeight) {
-                    showGoalMessage(
-                        'Starting weight and goal weight must be different.'
-                    );
-
-                    return;
-                }
-
-
-                weightData.startingWeight =
-                    startingWeight;
-
-                weightData.goalWeight =
-                    goalWeight;
-
-
-                if (!saveWeightData()) {
-                    return;
-                }
-
-
-                showGoalMessage('');
-                goalSetup.hidden = true;
-                weightDashboard.hidden = false;
-
-                renderWeightTracker();
+            if (
+                startingWeight === null ||
+                goalWeight === null ||
+                startingWeight > 99999.9 ||
+                goalWeight > 99999.9
+            ) {
+                showGoalMessage("Enter valid starting and goal weights.");
+                return;
             }
+
+            if (startingWeight === goalWeight) {
+                showGoalMessage(
+                    "Starting weight and goal weight must be different."
+                );
+                return;
+            }
+
+            await runWeightChange(
+                async userId => {
+                    const { error } = await supabaseClient
+                        .from("member_weight_goals")
+                        .upsert({
+                            user_id: userId,
+                            starting_weight: startingWeight,
+                            goal_weight: goalWeight
+                        }, {
+                            onConflict: "user_id"
+                        });
+
+                    if (error) throw error;
+                },
+
+                () => {
+                    weightData.startingWeight = startingWeight;
+                    weightData.goalWeight = goalWeight;
+                },
+
+                goalMessage,
+                "Weight goals saved to your account."
+            );
+        }
 
 
             function editGoals() {
@@ -578,102 +624,97 @@ document.addEventListener('DOMContentLoaded', function () {
        Weight Entries
     ================================================== */
 
-            function saveWeightEntry() {
-                const date =
-                    entryDateInput.value;
+        async function saveWeightEntry(event) {
+            event?.preventDefault();
 
-                const weight =
-                    sanitizeWeight(
-                        currentWeightInput.value
+            if (!hasWeightGoals()) {
+                showEntryMessage("Save your weight goals first.");
+                return;
+            }
+
+            const date = entryDateInput.value;
+            const parsedDate = parseDateKey(date);
+
+            const validDate =
+                /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+                !Number.isNaN(parsedDate.getTime()) &&
+                parsedDate.getFullYear() === Number(date.slice(0, 4)) &&
+                parsedDate.getMonth() + 1 === Number(date.slice(5, 7)) &&
+                parsedDate.getDate() === Number(date.slice(8, 10));
+
+            if (!validDate || date > getTodayKey()) {
+                showEntryMessage("Choose a valid date up to today.");
+                return;
+            }
+
+            const weight = sanitizeWeight(currentWeightInput.value);
+
+            if (weight === null || weight > 99999.9) {
+                showEntryMessage("Enter a valid current weight.");
+                return;
+            }
+
+            await runWeightChange(
+                async userId => {
+                    const { error } = await supabaseClient
+                        .from("member_weight_entries")
+                        .upsert({
+                            user_id: userId,
+                            entry_date: date,
+                            weight
+                        }, {
+                            onConflict: "user_id,entry_date"
+                        });
+
+                    if (error) throw error;
+                },
+
+                () => {
+                    weightData.entries = weightData.entries.filter(
+                        entry => entry.date !== date
                     );
 
-
-                if (!date) {
-                    showEntryMessage(
-                        'Choose an entry date.'
-                    );
-
-                    return;
-                }
-
-
-                if (date > getTodayKey()) {
-                    showEntryMessage(
-                        'Future weight entries cannot be recorded.'
-                    );
-
-                    return;
-                }
-
-
-                if (weight === null) {
-                    showEntryMessage(
-                        'Enter a valid current weight.'
-                    );
-
-                    return;
-                }
-
-
-                const existingEntry =
-                    weightData.entries.find(
-                        function (entry) {
-                            return entry.date === date;
-                        }
-                    );
-
-
-                if (existingEntry) {
-                    existingEntry.weight =
-                        weight;
-                } else {
                     weightData.entries.push({
-                        id: createEntryId(),
+                        id: date,
                         date,
-                        weight,
+                        weight
                     });
-                }
 
+                    currentWeightInput.value = "";
+                },
 
-                if (!saveWeightData()) {
-                    return;
-                }
+                entryMessage,
+                "Weight entry saved to your account."
+            );
+        }
 
+        async function deleteWeightEntry(entryId) {
+            await runWeightChange(
+                async userId => {
+                    const { error } = await supabaseClient
+                        .from("member_weight_entries")
+                        .delete()
+                        .eq("user_id", userId)
+                        .eq("entry_date", entryId);
 
-                currentWeightInput.value = '';
+                    if (error) throw error;
+                },
 
-                showEntryMessage(
-                    existingEntry
-                        ? 'Weight entry updated.'
-                        : 'Weight entry saved.'
-                );
-
-                renderWeightTracker();
-            }
-
-
-            function deleteWeightEntry(entryId) {
-                weightData.entries =
-                    weightData.entries.filter(
-                        function (entry) {
-                            return entry.id !== entryId;
-                        }
+                () => {
+                    weightData.entries = weightData.entries.filter(
+                        entry => entry.id !== entryId
                     );
+                },
 
-                saveWeightData();
+                entryMessage,
+                "Weight entry deleted."
+            );
+        }
 
-                showEntryMessage(
-                    'Weight entry deleted.'
-                );
-
-                renderWeightTracker();
-            }
-
-
-            function showEntryMessage(message) {
+        function showEntryMessage(message) {
                 entryMessage.textContent =
                     message;
-            }
+        }
 
 
     /* ==================================================
@@ -1006,46 +1047,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-            function resetWeightProgress() {
+            async function resetWeightProgress() {
+                if (!weightReady || weightBusy) return;
 
-            const confirmed = confirm(
-                'Reset all weight progress? This cannot be undone.'
-            );
+                const confirmed = confirm(
+                    "Delete all weight entries and weight goals from your account? " +
+                    "This cannot be undone. Workout activity and monthly " +
+                    "challenge progress will remain."
+                );
 
-            if (!confirmed) {
-                return;
+                if (!confirmed) return;
+
+                await runWeightChange(
+                    async userId => {
+                        const entriesResult = await supabaseClient
+                            .from("member_weight_entries")
+                            .delete()
+                            .eq("user_id", userId);
+
+                        if (entriesResult.error) throw entriesResult.error;
+
+                        const goalsResult = await supabaseClient
+                            .from("member_weight_goals")
+                            .delete()
+                            .eq("user_id", userId);
+
+                        if (goalsResult.error) throw goalsResult.error;
+                    },
+
+                    () => {
+                        weightData = getEmptyWeightData();
+                        currentWeightInput.value = "";
+                        entryDateInput.value = getTodayKey();
+                        showEntryMessage("");
+                    },
+
+                    goalMessage,
+                    "Weight entries and goals have been reset."
+                );
             }
-
-            localStorage.removeItem(storageKey);
-
-            weightData = getEmptyWeightData();
-
-            goalSetup.hidden = false;
-            weightDashboard.hidden = true;
-
-            startingWeightInput.value = '';
-            goalWeightInput.value = '';
-            currentWeightInput.value = '';
-
-            showGoalMessage('');
-            showEntryMessage('');
-
-            entryDateInput.value = getTodayKey();
-
-            const summaryCurrentWeight =
-                document.querySelector('#summary-current-weight');
-
-            const summaryWeightChange =
-                document.querySelector('#summary-weight-change');
-
-            if (summaryCurrentWeight) {
-                summaryCurrentWeight.textContent = '--';
-            }
-
-            if (summaryWeightChange) {
-                summaryWeightChange.textContent = '--';
-            }
-        }
     /* ==================================================
        Events
     ================================================== */
@@ -1109,27 +1149,47 @@ document.addEventListener('DOMContentLoaded', function () {
        Initialize
     ================================================== */
 
-            entryDateInput.value =
-                getTodayKey();
+    entryDateInput.value = getTodayKey();
+    entryDateInput.max = getTodayKey();
 
-            entryDateInput.max =
-                getTodayKey();
+    displayWeightData();
 
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_OUT") {
+            loadAccountWeight(null);
+            return;
+        }
 
-            if (hasWeightGoals()) {
-                startingWeightInput.value =
-                    weightData.startingWeight;
+        if (session?.user && session.user.id !== weightUserId) {
+            const version = weightVersion;
 
-                goalWeightInput.value =
-                    weightData.goalWeight;
+            setTimeout(() => {
+                if (
+                    version === weightVersion &&
+                    session.user.id !== weightUserId
+                ) {
+                    loadAccountWeight(session.user.id);
+                }
+            }, 0);
+        }
+    });
 
-                goalSetup.hidden = true;
-                weightDashboard.hidden = false;
+    const initialWeightVersion = weightVersion;
 
-                renderWeightTracker();
+    supabaseClient.auth.getUser()
+        .then(({ data, error }) => {
+            if (weightVersion !== initialWeightVersion) return;
+            if (error) throw error;
 
-            } else {
-                goalSetup.hidden = false;
-                weightDashboard.hidden = true;
-            }
+            return loadAccountWeight(data.user?.id || null);
+        })
+        .catch(error => {
+            if (weightVersion !== initialWeightVersion) return;
+
+            console.error("Weight session check failed:", error);
+            showGoalMessage(
+                "We could not check your account. Refresh to retry."
+            );
+        });
+
 });

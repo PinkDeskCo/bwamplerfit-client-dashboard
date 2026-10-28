@@ -1,0 +1,1358 @@
+/* ==================================================
+   November: page and shared controls
+================================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+.november-challenge {
+    background: #f3eadb;
+    color: #382b20;
+}
+
+.november-challenge .challenge-page {
+    width: min(1180px, calc(100% - 40px));
+    padding: 28px 0 60px;
+}
+
+.november-challenge button,
+.november-challenge input {
+    font: inherit;
+}
+
+.november-challenge :focus-visible {
+    outline: 3px solid #a44c27;
+    outline-offset: 4px;
+}
+
+/* ==================================================
+   Hero
+================================================== */
+
+.challenge-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 290px;
+    margin-bottom: 0;
+    padding: 40px 64px;
+    border: 1px solid #d4bd94;
+    border-radius: 28px 28px 0 0;
+    text-align: left;
+    background:
+        radial-gradient(
+            ellipse at 80% 30%,
+            #f4d899 0,
+            transparent 55%
+        ),
+        #f9efd8;
+    box-shadow: none;
+}
+
+.challenge-hero::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    width: auto;
+    height: auto;
+    border: 1px solid #dac39c;
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.challenge-hero::after {
+    display: none;
+}
+
+.challenge-hero__content {
+    max-width: 650px;
+    margin: 0;
+    text-align: left;
+}
+
+.challenge-hero__logo {
+    width: 104px;
+    height: auto;
+    margin: 0 0 18px;
+    mix-blend-mode: multiply;
+}
+
+.challenge-hero__eyebrow {
+    color: #81502f;
+    font-size: 11px;
+    letter-spacing: 0.17em;
+    font-weight: 700;
+}
+
+.challenge-hero__title {
+    margin: 8px 0 10px;
+    color: #49321f;
+    font-family: Georgia, serif;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    letter-spacing: -0.055em;
+}
+
+.challenge-hero__subtitle {
+    max-width: 510px;
+    margin: 14px 0 22px;
+    color: #6c553c;
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+.trot-season {
+    position: absolute;
+    right: 38px;
+    top: 24px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: #775d3e;
+}
+
+.trot-hero-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.trot-hero-details span {
+    padding: 8px 13px;
+    border-radius: 30px;
+    border: 1px solid #cfb080;
+    color: #70472b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.trot-hero-art {
+    flex: 0 0 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12px;
+    transform: rotate(4deg);
+}
+
+.trot-hero-art img {
+    width: 215px;
+    height: 215px;
+    filter: drop-shadow(0 10px 8px #8d643320);
+}
+
+.trot-hero-art span {
+    font: italic 22px/1.1 Georgia, serif;
+    text-align: center;
+    color: #76502f;
+}
+
+/* ==================================================
+   Account access
+================================================== */
+
+.challenge-auth__card {
+    background: #fffaf2;
+    border: 1px solid #dac5a3;
+    box-shadow: 0 22px 60px #6d4c2614;
+}
+
+.challenge-auth__challenge-name {
+    font-family: Georgia, serif;
+    color: #8d492c;
+}
+
+.challenge-auth__title {
+    font-family: Georgia, serif;
+    line-height: 1.15;
+}
+
+#challenge-forgot-password {
+    display: block;
+    margin: 18px auto 0;
+    padding: 10px 8px;
+    min-height: 44px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #825031;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+/* ==================================================
+   Main challenge panel
+================================================== */
+
+.challenge-progress.turkey-trot {
+    max-width: none;
+    padding: 34px 40px 20px;
+    border: 1px solid #d4bd94;
+    border-top: 0;
+    border-radius: 0 0 28px 28px;
+    background: #fffcf5;
+    box-shadow: 0 20px 40px #65421c0a;
+}
+
+.trot-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.trot-heading h2 {
+    margin: 7px 0;
+    font: normal clamp(22px, 3vw, 32px)/1.2 Georgia, serif;
+    letter-spacing: -0.025em;
+}
+
+.trot-eyebrow {
+    margin: 0;
+    color: #97502f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+#trot-status {
+    margin: 14px 0 24px;
+    color: #74634f;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.trot-button {
+    min-height: 46px;
+    padding: 11px 18px;
+    border: 1px solid #9d462a;
+    border-radius: 9px;
+    background: #a74e2f;
+    color: #fffaf1;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.trot-button:hover:not(:disabled) {
+    background: #813920;
+}
+
+.trot-button--secondary {
+    border-color: #cdb893;
+    background: #fff9ed;
+    color: #63432a;
+    margin-bottom: 10px;
+}
+
+.trot-button--secondary:hover:not(:disabled) {
+    background: #eee0c6;
+}
+
+.turkey-trot button:disabled,
+.turkey-trot input:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ==================================================
+   Monthly track
+================================================== */
+
+.trot-track {
+    position: relative;
+    margin: 0 auto;
+    padding: 22px 20px 8px;
+    border: 1px solid #e1d1b7;
+    border-radius: 20px;
+    background:
+        radial-gradient(
+            ellipse at center,
+            #fffdf7,
+            #f6ecd9
+        );
+}
+
+.trot-track-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 0 4px;
+    color: #88704f;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+}
+
+.trot-track-caption span:last-child {
+    font: italic 14px Georgia, serif;
+    letter-spacing: 0;
+}
+
+.trot-track > svg {
+    display: block;
+    width: min(100%, 850px);
+    height: auto;
+    margin: auto;
+    overflow: visible;
+}
+
+.trot-track__base {
+    stroke: #e7d8bc;
+}
+
+.trot-track__fill {
+    stroke: url(#track-progress);
+}
+
+.trot-track text {
+    fill: #49321f;
+    font-family: Arial, sans-serif;
+}
+
+.trot-track__label {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+.trot-track__total {
+    font-family: Georgia, serif !important;
+    font-size: 64px;
+    font-weight: normal;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -2px;
+}
+
+.trot-track__goal {
+    font-size: 20px;
+    fill: #806548 !important;
+}
+
+.trot-track__percent {
+    font-size: 17px;
+    font-weight: 700;
+    fill: #99502e !important;
+}
+
+.trot-track__finish {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+#trot-turkey {
+    filter: drop-shadow(0 4px 4px #56361930);
+}
+
+/* ==================================================
+   Progress totals
+================================================== */
+
+.trot-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 18px 0 30px;
+    padding: 8px 0;
+    border-top: 1px solid #e1d1b7;
+    border-bottom: 1px solid #e1d1b7;
+}
+
+.trot-stats > div {
+    padding: 15px;
+    text-align: center;
+}
+
+.trot-stats > div + div {
+    border-left: 1px solid #e1d1b7;
+}
+
+.trot-stats span {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    color: #77624b;
+}
+
+.trot-stats strong {
+    display: block;
+    font: normal clamp(18px, 2.5vw, 28px) Georgia, serif;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==================================================
+   Daily step entry
+================================================== */
+
+.trot-bottom-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.85fr)
+        minmax(0, 1.15fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.trot-entry {
+    padding: 25px;
+    border: 1px solid #e0cfb1;
+    border-radius: 16px;
+    background: #f7eedf;
+}
+
+.trot-entry h3,
+.trot-rewards h3 {
+    margin: 0 0 10px;
+    font: normal 25px/1.2 Georgia, serif;
+    letter-spacing: -0.03em;
+}
+
+.trot-entry p,
+.trot-rewards p,
+.trot-dialog p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.trot-entry > p {
+    color: #766149;
+}
+
+#trot-step-form {
+    display: grid;
+    gap: 9px;
+    margin-top: 22px;
+}
+
+#trot-step-form label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#trot-step-form input {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px;
+    border: 1px solid #cbb695;
+    border-radius: 8px;
+    background: #fffdf8;
+    color: #382416;
+}
+
+#trot-step-form label:not(:first-child) {
+    margin-top: 8px;
+}
+
+#trot-save-steps {
+    margin-top: 8px;
+    width: 100%;
+}
+
+#trot-entry-message,
+#trot-mini-message {
+    min-height: 1.6em;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+/* ==================================================
+   Feather collection preview
+================================================== */
+
+.trot-rewards {
+    position: relative;
+    padding: 25px;
+    border: 1px solid #d9c5a2;
+    border-radius: 16px;
+    background: #fffaf0;
+    text-align: left;
+}
+
+.trot-rewards .trot-eyebrow {
+    margin-bottom: 8px;
+}
+
+.trot-rewards > div:first-child {
+    padding-right: 75px;
+}
+
+#trot-feather-count {
+    margin: 12px 0;
+    color: #72482b;
+    font-weight: 700;
+}
+
+#trot-latest-feather {
+    position: absolute;
+    right: 14px;
+    top: 20px;
+    width: 66px;
+    text-align: center;
+    transform: rotate(12deg);
+}
+
+#trot-latest-feather svg {
+    width: 58px;
+    height: 87px;
+    filter: drop-shadow(0 5px 3px #5b3a2020);
+}
+
+#trot-latest-feather p {
+    display: none;
+}
+
+.trot-collection-preview {
+    display: grid;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.trot-set-preview {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 3px 12px;
+    padding: 10px 12px;
+    border: 1px solid #e8dbc5;
+    border-radius: 9px;
+    background: #ffffff80;
+}
+
+.trot-set-preview__feathers {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 6px;
+    height: 36px;
+}
+
+.trot-set-preview__feathers svg {
+    width: 25px;
+    height: 37px;
+    transform: rotate(17deg);
+}
+
+.trot-set-preview > span {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.trot-set-preview small {
+    color: #7b684f;
+    font-size: 10px;
+}
+
+.trot-rewards > button {
+    width: 100%;
+}
+
+.challenge-credit {
+    margin-top: 30px;
+}
+
+/* ==================================================
+   Local test controls
+================================================== */
+
+.trot-preview-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px dashed #97502f;
+    border-radius: 12px;
+    background: #fff4d1;
+    font-size: 12px;
+}
+
+.trot-preview-panel label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trot-preview-panel input,
+.trot-preview-panel button,
+.trot-preview-panel a {
+    min-height: 40px;
+    padding: 8px;
+    color: #382416;
+}
+
+/* ==================================================
+   Dialogs
+================================================== */
+
+.trot-dialog {
+    width: min(780px, calc(100% - 28px));
+    max-height: 88dvh;
+    padding: clamp(20px, 4vw, 36px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid #cbb493;
+    border-radius: 20px;
+    background: #fffcf6;
+    color: #382416;
+    box-shadow: 0 24px 80px rgb(0 0 0 / 25%);
+}
+
+.trot-dialog::backdrop {
+    background: rgb(38 25 16 / 60%);
+}
+
+.trot-dialog h2 {
+    clear: both;
+    margin-top: 20px;
+    font-family: Georgia, serif;
+    font-size: 1.8rem;
+}
+
+.trot-dialog__close {
+    display: block;
+    min-height: 44px;
+    margin-left: auto;
+    padding: 8px 16px;
+    border: 1px solid #cbb493;
+    border-radius: 10px;
+    background: #fff7e9;
+    color: #382416;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.trot-dialog--mini {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(480px, 100%);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 20px 0 0 20px;
+}
+
+/* ==================================================
+   Wednesday mini-challenges
+================================================== */
+
+.trot-mini-week {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e4d4bd;
+    border-radius: 14px;
+    background: #fff8ed;
+}
+
+.trot-mini-week h3 {
+    margin-top: 8px;
+}
+
+.trot-mini-week ul {
+    padding-left: 22px;
+    line-height: 1.8;
+}
+
+.trot-mini-week li {
+    margin-bottom: 8px;
+}
+
+.trot-mini-week li strong {
+    display: inline-block;
+    min-width: 20px;
+    color: #a44c27;
+}
+
+.trot-mini-week label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+    margin-top: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.trot-mini-week input {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    accent-color: #a44c27;
+}
+
+/* ==================================================
+   Full feather collection
+================================================== */
+
+.trot-feather-set {
+    padding: 20px 0;
+    border-top: 1px solid #e4d4bd;
+}
+
+.trot-feather-set h3 {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 20px;
+}
+
+.trot-feather-set h3 span {
+    color: #756451;
+    white-space: nowrap;
+}
+
+.trot-feather-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.trot-feather {
+    min-width: 0;
+    text-align: center;
+}
+
+.trot-feather svg {
+    display: block;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+.trot-feather span,
+.trot-feather small {
+    display: block;
+}
+
+.trot-feather span {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.trot-feather small {
+    margin-top: 6px;
+    color: #756451;
+    font-size: 0.72rem;
+    line-height: 1.4;
+}
+
+/* Fully feathered turkey: happy dance */
+
+.trot-feather-turkey.is-fully-feathered svg {
+    transform-origin: 50% 88%;
+    animation: trot-turkey-happy-dance 4s ease-in-out infinite;
+}
+
+/* Collectible coins for completed feather sets */
+.trot-collection-coin {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.trot-collection-coin img {
+    display: block;
+    width: 140px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 5px rgb(56 47 44 / 20%));
+}
+
+.trot-collection-coin small {
+    color: #81432f;
+    font-weight: 700;
+}
+
+.trot-set-preview .trot-collection-coin img {
+    width: 90px;
+}
+
+/* Achievement ribbon artwork */
+.trot-ribbon-award {
+    margin: 24px auto;
+    text-align: center;
+}
+
+.trot-ribbon-award img {
+    display: block;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 14px;
+    filter: drop-shadow(0 6px 5px rgb(56 47 44 / 22%));
+}
+
+.trot-ribbon-award h4 {
+    margin: 0 0 8px;
+    color: #704522;
+    font: normal 25px/1.2 Georgia, serif;
+}
+
+.trot-ribbon-award p {
+    margin: 0;
+    color: #795335;
+}
+
+/* Replace the old circular star holder */
+.trot-mini-reward .trot-mini-reward__art,
+.trot-mini-reward.is-earned .trot-mini-reward__art {
+    display: block;
+    width: min(200px, 100%);
+    height: auto;
+    margin: 0 auto 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.trot-mini-reward__art img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 6px 5px rgb(56 47 44 / 22%));
+}
+
+.trot-mini-reward__art img.is-locked {
+    filter: grayscale(1);
+    opacity: 0.35;
+}
+
+@keyframes trot-turkey-happy-dance {
+    0%, 55%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    8% {
+        transform: translateY(-8px) rotate(-4deg);
+    }
+
+    16% {
+        transform: translateY(0) rotate(4deg);
+    }
+
+    24% {
+        transform: translateY(-12px) rotate(-4deg);
+    }
+
+    32% {
+        transform: translateY(0) rotate(4deg);
+    }
+
+    40% {
+        transform: translateY(-6px) rotate(-2deg);
+    }
+
+    48% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trot-feather-turkey.is-fully-feathered svg {
+        animation: none;
+    }
+}
+/* ==================================================
+   Mobile
+================================================== */
+
+@media (max-width: 760px) {
+    .november-challenge .challenge-page {
+        width: calc(100% - 24px);
+        padding-top: 12px;
+    }
+
+    .challenge-hero {
+        padding: 42px 28px 28px;
+        gap: 12px;
+        min-height: 245px;
+    }
+
+    .challenge-hero__title {
+        font-size: 58px;
+    }
+
+    .challenge-hero__subtitle {
+        font-size: 14px;
+    }
+
+    .challenge-hero__logo {
+        width: 85px;
+    }
+
+    .trot-season {
+        right: 26px;
+        top: 20px;
+        font-size: 8px;
+    }
+
+    .trot-hero-art {
+        flex-basis: 135px;
+    }
+
+    .trot-hero-art img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .trot-hero-art span {
+        font-size: 18px;
+    }
+
+    .trot-hero-details span {
+        font-size: 10px;
+    }
+
+    .challenge-progress.turkey-trot {
+        padding: 26px 18px 18px;
+    }
+
+    .trot-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .trot-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trot-track {
+        padding: 16px 0 3px;
+    }
+
+    .trot-track-caption {
+        padding: 0 12px;
+        font-size: 8px;
+    }
+
+    .trot-track-caption span:last-child {
+        font-size: 11px;
+    }
+
+    .trot-track__label {
+        font-size: 21px;
+        letter-spacing: 2px;
+    }
+
+    .trot-track__total {
+        font-size: 68px;
+    }
+
+    .trot-track__goal,
+    .trot-track__percent {
+        font-size: 25px;
+    }
+
+    .trot-track__finish {
+        font-size: 18px;
+    }
+
+    .trot-stats > div {
+        padding: 12px 5px;
+    }
+
+    .trot-stats span {
+        font-size: 10px;
+        min-height: 25px;
+    }
+
+    .trot-stats strong {
+        font-size: 18px;
+    }
+
+    .trot-rewards,
+    .trot-entry {
+        padding: 22px;
+    }
+
+    .trot-feather-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 12px;
+    }
+
+    .trot-dialog--mini {
+        inset: auto 0 0;
+        width: 100%;
+        height: 92dvh;
+        max-height: 92dvh;
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+@media (max-width: 420px) {
+    .challenge-hero {
+        padding: 42px 24px 28px;
+    }
+
+    .challenge-hero__title {
+        font-size: 48px;
+    }
+
+    .trot-hero-art {
+        flex-basis: 95px;
+    }
+
+    .trot-hero-art img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .trot-hero-art span {
+        font-size: 15px;
+    }
+
+    .challenge-hero__subtitle {
+        font-size: 13px;
+    }
+
+    .trot-hero-details span {
+        padding: 6px 9px;
+    }
+
+    .trot-stats strong {
+        font-size: 16px;
+    }
+}
+
+/* ==================================================
+   Turkey Trot responsive refinements
+================================================== */
+
+/* Let content shrink within flex and grid layouts. */
+.november-challenge .challenge-hero__content,
+.november-challenge .trot-bottom-grid > *,
+.november-challenge .trot-heading > *,
+.november-challenge .challenge-auth__card {
+    min-width: 0;
+}
+
+.november-challenge .challenge-credit {
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.november-challenge .trot-set-preview > .trot-collection-coin {
+    grid-column: 1 / -1;
+}
+
+.november-challenge .trot-feather-set h3 {
+    flex-wrap: wrap;
+}
+
+.november-challenge .trot-dialog {
+    max-width: calc(100vw - 24px);
+    overflow-wrap: anywhere;
+}
+
+.november-challenge .trot-dialog__close {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* Keep panels hidden until the session check chooses one. */
+#challenge-auth[hidden],
+#challenge-dashboard[hidden] {
+    display: none !important;
+}
+
+#challenge-loading {
+    min-height: 60vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: #70472b;
+    text-align: center;
+    font: 20px/1.5 Georgia, serif;
+}
+
+#challenge-loading[hidden] {
+    display: none !important;
+}
+/* Tablets and smaller laptops */
+@media (max-width: 980px) {
+    .november-challenge .challenge-hero {
+        padding: 40px 32px;
+        gap: 20px;
+    }
+
+    .november-challenge .challenge-hero__content {
+        flex: 1 1 0;
+    }
+
+    .november-challenge .trot-hero-art {
+        flex: 0 0 170px;
+    }
+
+    .november-challenge .trot-hero-art img {
+        width: 170px;
+        height: auto;
+    }
+
+    .november-challenge .challenge-progress.turkey-trot {
+        padding: 28px 24px 20px;
+    }
+
+    .november-challenge .trot-bottom-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .november-challenge .trot-heading {
+        flex-wrap: wrap;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+    .november-challenge .challenge-page {
+        width: calc(100% - 24px);
+        padding: 16px 0 40px;
+    }
+
+    .november-challenge .challenge-hero {
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        padding: 48px 22px 28px;
+        min-height: 0;
+    }
+
+    .november-challenge .challenge-hero__content {
+        flex: initial;
+        width: 100%;
+        text-align: center;
+    }
+
+    .november-challenge .challenge-hero__logo {
+        width: 90px;
+        margin: 0 auto 18px;
+    }
+
+    .november-challenge .challenge-hero__title {
+        font-size: clamp(40px, 12vw, 64px);
+        overflow-wrap: normal;
+    }
+
+    .november-challenge .challenge-hero__subtitle {
+        margin: 16px auto 20px;
+        font-size: 16px;
+    }
+
+    .november-challenge .trot-season {
+        inset: 22px 20px auto;
+        text-align: center;
+        font-size: 9px;
+    }
+
+    .november-challenge .trot-hero-details {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .november-challenge .trot-hero-details span {
+        font-size: 11px;
+    }
+
+    .november-challenge .trot-hero-art {
+        flex: initial;
+        padding-top: 0;
+    }
+
+    .november-challenge .trot-hero-art img {
+        width: min(180px, 65vw);
+        height: auto;
+    }
+
+    .november-challenge .trot-hero-art span {
+        font-size: 20px;
+    }
+
+    .november-challenge .challenge-progress.turkey-trot {
+        padding: 24px 14px 18px;
+    }
+
+    .november-challenge .trot-heading > button {
+        width: 100%;
+    }
+
+    .november-challenge .trot-entry,
+    .november-challenge .trot-rewards {
+        padding: 20px 16px;
+    }
+
+    /* Avoid squeezing the reward heading beside a feather. */
+    .november-challenge .trot-rewards > div:first-child {
+        padding-right: 0;
+    }
+
+    .november-challenge #trot-latest-feather {
+        position: static;
+        width: 66px;
+        margin: 12px auto;
+    }
+
+    .november-challenge .trot-track-caption {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        gap: 6px 12px;
+    }
+
+    .november-challenge .trot-set-preview {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px;
+    }
+
+    .november-challenge .trot-set-preview__feathers {
+        justify-content: space-between;
+        gap: 2px;
+    }
+
+    .november-challenge .trot-set-preview__feathers svg {
+        flex: 0 1 25px;
+        min-width: 0;
+    }
+
+    /* Prevent iPhone zoom when entering information. */
+    .november-challenge input:not([type="checkbox"]),
+    .november-challenge select,
+    .november-challenge textarea {
+        min-width: 0;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .november-challenge .challenge-auth {
+        min-height: 100svh;
+        padding: 24px 12px;
+    }
+
+    .november-challenge .challenge-auth__card {
+        padding: 32px 20px;
+    }
+
+    .november-challenge .challenge-auth__choices {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .november-challenge .trot-dialog {
+        padding: 18px;
+        max-height: 90dvh;
+    }
+
+    .november-challenge .trot-dialog--mini {
+        max-width: 100vw;
+        height: 92dvh;
+        max-height: 92dvh;
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    .november-challenge .trot-mini-week {
+        padding: 16px;
+    }
+
+    .november-challenge .trot-feather-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 10px;
+    }
+
+    .november-challenge .challenge-completion__card {
+        padding: 30px 16px;
+    }
+
+    .november-challenge .challenge-completion__title {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.12;
+    }
+
+    .november-challenge .challenge-certificate-ready__name {
+        overflow-wrap: anywhere;
+    }
+
+    /* Screen preview only. PDF export keeps its own layout. */
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__inner {
+        aspect-ratio: auto;
+        padding: 24px 16px;
+    }
+
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__hero {
+        height: 120px;
+        padding-top: 0;
+    }
+
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__hero-image {
+        margin-top: 0;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__name {
+        max-width: 100%;
+        padding-inline: 8px;
+        font-size: 30px;
+        overflow-wrap: anywhere;
+    }
+
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__challenge {
+        margin-inline: 0;
+        font-size: 25px;
+    }
+
+    .challenge-certificate-preview:not(.is-exporting)
+    .challenge-certificate-preview__footer {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 24px 8px 0;
+        text-align: center;
+    }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+    .november-challenge .trot-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .november-challenge .trot-stats > div + div {
+        border-left: 0;
+        border-top: 1px solid #e1d1b7;
+    }
+
+    .november-challenge .trot-stats span {
+        min-height: 0;
+    }
+
+    .november-challenge .trot-stats strong {
+        font-size: 24px;
+    }
+}
+/* ==================================================
+   Reduced motion
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .november-challenge *,
+    .november-challenge *::before,
+    .november-challenge *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+    }
+}

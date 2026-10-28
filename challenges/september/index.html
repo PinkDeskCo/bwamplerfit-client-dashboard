@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BWamplerFit Challenge</title>
+
+    <link rel="stylesheet"
+        href="./assets/css/challenge.css"
+    >
+
+    <style>
+        .member-navigation {
+            box-sizing: border-box;
+            width: min(100%, 1100px);
+            margin: 0 auto;
+            padding: 18px 24px 0;
+        }
+
+        .member-navigation a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 0 16px;
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            color: #182a43;
+            background: #fffdf7;
+            font: 600 14px/1.2 system-ui, sans-serif;
+            text-decoration: none;
+        }
+
+        .member-navigation a:hover {
+            background: #f3e9da;
+        }
+
+        .member-navigation a:focus-visible {
+            outline: 3px solid #bd572b;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="member-navigation" aria-label="Member navigation">
+        <a href="../../index.html">← My Dashboard</a>
+    </nav>
+
+    <main class="challenge-page">
+
+        <section class="challenge-auth"
+            id="challenge-auth"
+        >
+            <div class="challenge-auth__card">
+
+                <div class="challenge-auth__content"
+                    id="challenge-auth-content"
+                >
+
+                        <div class="challenge-auth__challenge">
+
+                            <img
+                                class="challenge-auth__challenge-image"
+                                src="./assets/images/strong-mom-hero.PNG"
+                                alt="Strong Mom September"
+                            >
+
+                            <p class="challenge-auth__challenge-name">
+                                Strong Mom September
+                            </p>
+
+                            <p class="challenge-auth__challenge-dates">
+                                September 1–30
+                            </p>
+
+                        </div>
+
+                        <p class="challenge-auth__eyebrow">
+                            Your Challenge Access
+                        </p>
+
+                        <h1 class="challenge-auth__title">
+                            Your challenge starts here.
+                        </h1>
+
+                        <p class="challenge-auth__text">
+                            Sign in to continue your challenge,
+                            or get started to create your account.
+                            Your progress saves automatically
+                            and follows you across devices.
+                        </p>
+                        <div
+                            class="challenge-auth__choices"
+                            id="challenge-auth-choices"
+                        >
+                            <button
+                                class="challenge-auth__choice-button-one"
+                                id="challenge-auth-signin-choice"
+                                type="button"
+                            >
+                                Start The Challenge
+                            </button>
+
+                            <button
+                                class="challenge-auth__choice-button"
+                                id="challenge-auth-create-choice"
+                                type="button"
+                            >
+                                Create Account
+                            </button>
+                        </div>
+
+                        <form
+                            class="challenge-auth__form"
+                            id="challenge-auth-form"
+                            hidden
+                        >
+                            <label
+                                class="challenge-auth__label"
+                                for="challenge-auth-email"
+                            >
+                                Email address
+                            </label>
+
+                            <input
+                                class="challenge-auth__input"
+                                id="challenge-auth-email"
+                                type="email"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <label
+                                class="challenge-auth__label"
+                                for="challenge-auth-password"
+                                id="challenge-auth-password-label"
+                            >
+                                Password
+                            </label>
+
+                            <input
+                                class="challenge-auth__input"
+                                id="challenge-auth-password"
+                                type="password"
+                                autocomplete="current-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                class="challenge-auth__button"
+                                type="submit"
+                                id="challenge-auth-submit"
+                            >
+                                Continue To Challenge
+                            </button>
+                        </form>
+                </div>
+
+                <p
+                    class="challenge-auth__message"
+                    id="challenge-auth-message"
+                    aria-live="polite"
+                ></p>
+
+            </div>
+        </section>
+
+        <div  class="challenge-dashboard"
+            id="challenge-dashboard"
+            hidden
+        >
+            <section class="challenge-hero"
+                id="challenge-dashboard"
+                hidden
+            >
+
+                <div class="challenge-hero__media"
+                    id="challenge-hero-media"
+                    hidden
+                >
+                    <img
+                        class="challenge-hero__image"
+                        id="challenge-hero-image"
+                        src=""
+                        alt=""
+                    >
+                </div>
+
+                <div class="challenge-hero__content">
+
+                    <img
+                        class="challenge-hero__logo"
+                        id="challenge-logo"
+                        src=""
+                        alt=""
+                        hidden
+                    >
+
+                    <p class="challenge-hero__eyebrow"
+                        id="challenge-eyebrow"
+                    >
+                        30-Day Challenge
+                    </p>
+
+                    <h1 class="challenge-hero__title"
+                        id="challenge-title"
+                    >
+                        Challenge Title
+                    </h1>
+
+                    <p class="challenge-hero__subtitle"
+                        id="challenge-subtitle"
+                    >
+                        Challenge subtitle goes here.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <section class="challenge-progress">
+
+                <header class="challenge-progress__header">
+
+                <div class="challenge-progress__summary">
+
+                        <div class="challenge-progress-circle"
+                            id="challenge-progress-circle"
+                            role="progressbar"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-valuenow="0"
+                        >
+                            <div class="challenge-progress-circle__inner">
+
+                                <span
+                                    class="challenge-progress-circle__value"
+                                    id="challenge-progress-percent"
+                                >
+                                    0%
+                                </span>
+
+                                <span class="challenge-progress-circle__label">
+                                    complete
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="challenge-progress__info">
+
+                            <p class="challenge-progress__label">
+                                Your Progress
+                            </p>
+
+                            <h2 class="challenge-progress__status"
+                                id="challenge-status"
+                            >
+                                Day 1
+                            </h2>
+
+                            <p class="challenge-progress__count"
+                                id="challenge-count"
+                            >
+                                0 activities completed
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </header>
+
+
+                <div class="challenge-heatmap"
+                    id="challenge-heatmap"
+                    aria-label="30-day challenge progress"
+                >
+                </div>
+
+                <div class="challenge-day-detail"
+                    id="challenge-day-detail"
+                >
+                    <p class="challenge-day-detail__placeholder">
+                        Select a day to view your activities.
+                    </p>
+                </div>
+
+                <footer class="challenge-credit">
+                    <span>Created by</span>
+                    <a
+                        class="challenge-credit__brand"
+                        href="https://pinkdeskdreamlab.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Pink Desk Dream Lab
+                    </a>
+                </footer>
+
+            </section>
+
+            <section class="challenge-completion"
+                id="challenge-completion"
+                hidden
+            >
+                <div class="challenge-completion__card">
+
+                    <p class="challenge-completion__eyebrow">
+                        Challenge Complete
+                    </p>
+
+                    <h2 class="challenge-completion__title">
+                        30 Days. Done.
+                    </h2>
+
+                    <p class="challenge-completion__message">
+                        You showed up, stayed consistent,
+                        and completed the BWamplerFit
+                        30-Day Challenge.
+                    </p>
+
+                    <div class="challenge-completion__divider">
+                        <span></span>
+                    </div>
+
+                    <h3 class="challenge-completion__certificate-title">
+                        Your completion certificate is ready.
+                    </h3>
+
+                    <div class="challenge-certificate-name"
+                        id="challenge-certificate-name"
+                    >
+                        <label
+                            class="challenge-certificate-name__label"
+                            for="challenge-certificate-name-input"
+                        >
+                            What name would you like
+                            on your certificate?
+                        </label>
+
+                        <input
+                            class="challenge-certificate-name__input"
+                            id="challenge-certificate-name-input"
+                            type="text"
+                            autocomplete="name"
+                            maxlength="80"
+                            placeholder="Your name"
+                        >
+
+                        <button
+                            class="challenge-certificate-name__button"
+                            id="challenge-certificate-create"
+                            type="button"
+                        >
+                            Create My Certificate
+                        </button>
+
+                        <p
+                            class="challenge-certificate-name__message"
+                            id="challenge-certificate-name-message"
+                            aria-live="polite"
+                        ></p>
+                    </div>
+
+                    <div class="challenge-certificate-ready"
+                        id="challenge-certificate-ready"
+                        hidden
+                    >
+                        <p class="challenge-certificate-ready__label">
+                            Certificate prepared for
+                        </p>
+
+                        <h3
+                            class="challenge-certificate-ready__name"
+                            id="challenge-certificate-display-name"
+                        ></h3>
+
+                        <div class="challenge-certificate-preview"
+                            id="challenge-certificate-preview"
+                        >
+                            <div class="challenge-certificate-preview__inner">
+
+
+
+                                <div class="challenge-certificate-preview__hero">
+                                    <img
+                                        class="challenge-certificate-preview__hero-image"
+                                        src="./assets/images/strong-mom-hero.PNG"
+                                        alt=""
+                                    >
+                                </div>
+
+                                <p class="challenge-certificate-preview__eyebrow">
+                                    Certificate of Completion
+                                </p>
+
+                                <p class="challenge-certificate-preview__presented">
+                                    This certificate is proudly presented to
+                                </p>
+
+                                <h2
+                                    class="challenge-certificate-preview__name"
+                                    id="challenge-certificate-preview-name"
+                                ></h2>
+
+                                <p class="challenge-certificate-preview__for">
+                                    for successfully completing the
+                                </p>
+
+                                <h3 class="challenge-certificate-preview__challenge">
+                                    <span>BWamplerFit</span>
+
+                                    <span class="challenge-certificate-preview__challenge-script">
+                                        30-Day
+                                    </span>
+
+                                    <span>Challenge</span>
+                                </h3>
+
+                                <p class="challenge-certificate-preview__statement">
+                                    30 days of showing up, building consistency,
+                                    and choosing strength.
+                                </p>
+
+                                <div class="challenge-certificate-preview__footer">
+
+                                    <p
+                                        class="challenge-certificate-preview__date"
+                                        id="challenge-certificate-preview-date"
+                                    ></p>
+
+                                    <img
+                                        class="challenge-certificate-preview__footer-logo"
+                                        src="./assets/images/bwamplerfit-logo.png"
+                                        alt="BWamplerFit"
+                                    >
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <button
+                            class="challenge-certificate-ready__download"
+                            id="challenge-certificate-download"
+                            type="button"
+                        >
+                            Download Certificate
+                        </button>
+
+                        <button
+                            class="challenge-certificate-ready__edit"
+                            id="challenge-certificate-edit"
+                            type="button"
+                        >
+                            Edit certificate name
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/challenge-config.js?v=20260902-1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="./assets/js/challenge.js?v=20260902-1"></script>
+
+</body>
+</html>

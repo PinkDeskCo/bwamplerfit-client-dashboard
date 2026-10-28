@@ -155,174 +155,164 @@ document.addEventListener('DOMContentLoaded', function () {
             `workout-activity-${currentYear}`;
 
 
-    /* ==================================================
-       Stored Data
-    ================================================== */
+     /* ==================================================
+        Account activity data
+        ================================================== */
 
-        let activityEntries =
-            loadEntries();
+        let activityEntries = {};
+        let activityUserId = null;
+        let activityVersion = 0;
+        let activityReady = false;
+        let activityBusy = false;
 
+        function updateActivityControls() {
+            saveButton.disabled = !activityReady || activityBusy;
 
-        function loadEntries() {
-            try {
-                const storedValue =
-                    localStorage.getItem(storageKey);
-
-                if (!storedValue) {
-                    return {};
-                }
-
-                const parsedValue =
-                    JSON.parse(storedValue);
-
-                if (
-                    typeof parsedValue !== 'object'
-                    || parsedValue === null
-                    || Array.isArray(parsedValue)
-                ) {
-                    return {};
-                }
-
-                return migrateEntries(parsedValue);
-            } catch (error) {
-                console.error(
-                    'Activity data could not be loaded.',
-                    error
-                );
-
-                return {};
+            if (resetWorkoutButton) {
+                resetWorkoutButton.disabled =
+                    !activityReady || activityBusy;
             }
         }
 
-
-        function migrateEntries(entries) {
-            const migratedEntries = {};
-
-            Object.keys(entries).forEach(function (dateKey) {
-                const entry =
-                    entries[dateKey];
-
-
-                if (
-                    entry
-                    && Array.isArray(entry.sessions)
-                ) {
-                    migratedEntries[dateKey] = {
-                        sessions:
-                            entry.sessions.map(
-                                normalizeSession
-                            ),
-                    };
-
-                    return;
-                }
-
-
-                if (
-                    entry
-                    && typeof entry === 'object'
-                ) {
-                    migratedEntries[dateKey] = {
-                        sessions: [
-                            normalizeSession({
-                                id: createSessionId(),
-                                name: 'Previous activity',
-                                activityType: '',
-                                duration: 0,
-                                distance: 0,
-                                strength:
-                                    Number(entry.strength) || 0,
-                                walking:
-                                    Number(entry.walking) || 0,
-                                mobility:
-                                    Number(entry.mobility) || 0,
-                                steps:
-                                    Number(entry.steps) || 0,
-                                notes:
-                                    entry.notes || '',
-                            }),
-                        ],
-                    };
-                }
-            });
-
-            return migratedEntries;
+        function refreshActivityDisplay() {
+            buildHeatmap();
+            loadSelectedDate(entryDateInput.value);
+            updateStatistics();
         }
 
+        async function loadAccountActivity(userId) {
+            const version = ++activityVersion;
+
+            activityUserId = userId || null;
+            activityReady = false;
+            activityEntries = {};
+
+            clearFormFields();
+
+            if (settingsDialog?.open) {
+                settingsDialog.close();
+            }
+
+            refreshActivityDisplay();
+            updateActivityControls();
+
+            if (!userId) {
+                showMessage("Sign in to record your activity.");
+                return;
+            }
+
+            showMessage("Loading your activity…");
+
+            try {
+                const entries = {};
+                let offset = 0;
+                const pageSize = 500;
+
+                while (true) {
+                    const { data, error } = await supabaseClient
+                        .from("member_activity_sessions")
+                        .select("session_id, activity_date, session_data")
+                        .eq("user_id", userId)
+                        .gte("activity_date", `${currentYear}-01-01`)
+                        .lte("activity_date", `${currentYear}-12-31`)
+                        .order("activity_date")
+                        .order("session_id")
+                        .range(offset, offset + pageSize - 1);
+
+                    if (version !== activityVersion) return;
+                    if (error) throw error;
+
+                    for (const row of data || []) {
+                        const dateKey = row.activity_date;
+
+                        if (!entries[dateKey]) {
+                            entries[dateKey] = { sessions: [] };
+                        }
+
+                        entries[dateKey].sessions.push(
+                            normalizeSession({
+                                ...row.session_data,
+                                id: row.session_id
+                            })
+                        );
+                    }
+
+                    if ((data || []).length < pageSize) break;
+                    offset += pageSize;
+                }
+
+                activityEntries = entries;
+                activityReady = true;
+
+                refreshActivityDisplay();
+                showMessage("");
+            } catch (error) {
+                if (version !== activityVersion) return;
+
+                console.error("Activity load failed:", error);
+                showMessage(
+                    "Your activity could not be loaded. Refresh the page to retry."
+                );
+            } finally {
+                if (version === activityVersion) {
+                    updateActivityControls();
+                }
+            }
+        }
 
         function normalizeSession(session) {
             return {
-                id:
-                    session.id
-                    || createSessionId(),
-
-                name:
-                    session.name
-                    || 'Activity session',
-
-                activityType:
-                    session.activityType
-                    || '',
-
-                duration:
-                    sanitizeNumber(
-                        session.duration
-                    ),
-
-                distance:
-                    sanitizeDecimal(
-                        session.distance
-                    ),
-
-                strength:
-                    sanitizeNumber(
-                        session.strength
-                    ),
-
-                walking:
-                    sanitizeNumber(
-                        session.walking
-                    ),
-
-                mobility:
-                    sanitizeNumber(
-                        session.mobility
-                    ),
-
-                steps:
-                    sanitizeNumber(
-                        session.steps
-                    ),
-
-                notes:
-                    session.notes
-                    || '',
+                id: session.id || createSessionId(),
+                name: session.name || "Activity session",
+                activityType: session.activityType || "",
+                duration: sanitizeNumber(session.duration),
+                distance: sanitizeDecimal(session.distance),
+                strength: sanitizeNumber(session.strength),
+                walking: sanitizeNumber(session.walking),
+                mobility: sanitizeNumber(session.mobility),
+                steps: sanitizeNumber(session.steps),
+                notes: session.notes || ""
             };
         }
 
-
-        function saveEntries() {
-            try {
-                localStorage.setItem(
-                    storageKey,
-                    JSON.stringify(activityEntries)
-                );
-
-                return true;
-            } catch (error) {
-                console.error(
-                    'Activity data could not be saved.',
-                    error
-                );
-
+        async function runActivityChange(operation, applyChange, message) {
+            if (!activityReady || activityBusy || !activityUserId) {
                 showMessage(
-                    'Your activity could not be saved.'
+                    activityBusy
+                        ? "Please wait for the current change to finish."
+                        : "Your activity must finish loading before making changes."
                 );
+                return;
+            }
 
-                return false;
+            const userId = activityUserId;
+            const version = activityVersion;
+
+            activityBusy = true;
+            updateActivityControls();
+
+            try {
+                const { error } = await operation(userId);
+
+                if (error) throw error;
+
+                if (version !== activityVersion) return;
+
+                applyChange();
+                refreshActivityDisplay();
+                showMessage(message);
+            } catch (error) {
+                if (version !== activityVersion) return;
+
+                console.error("Activity change failed:", error);
+                showMessage(
+                    "The change could not be saved. Please try again."
+                );
+            } finally {
+                activityBusy = false;
+                updateActivityControls();
             }
         }
-
 
     /* ==================================================
        Date Helpers
@@ -866,87 +856,53 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        function addSession() {
-            const dateKey =
-                entryDateInput.value;
+       async function addSession(event) {
+            event?.preventDefault();
 
-            if (!dateKey) {
-                showMessage(
-                    'Choose an entry date.'
-                );
-
-                return;
-            }
-
-
-            const selectedDate =
-                parseDateKey(dateKey);
-
-
-            if (selectedDate > today) {
-                showMessage(
-                    'Future activity cannot be recorded.'
-                );
-
-                return;
-            }
-
-
-            const session =
-                getFormSession();
-
-
-            if (!sessionHasActivity(session)) {
-                showMessage(
-                    'Enter some activity before saving.'
-                );
-
-                return;
-            }
-
-
-            if (!activityEntries[dateKey]) {
-                activityEntries[dateKey] = {
-                    sessions: [],
-                };
-            }
-
+            const dateKey = entryDateInput.value;
+            const selectedDate = parseDateKey(dateKey);
 
             if (
-                !Array.isArray(
-                    activityEntries[dateKey]
-                        .sessions
-                )
+                !dateKey ||
+                Number.isNaN(selectedDate.getTime()) ||
+                formatDateKey(selectedDate) !== dateKey ||
+                selectedDate.getFullYear() !== currentYear ||
+                selectedDate > today
             ) {
-                activityEntries[dateKey]
-                    .sessions = [];
-            }
-
-
-            activityEntries[dateKey]
-                .sessions
-                .push(session);
-
-
-            const saved =
-                saveEntries();
-
-
-            if (!saved) {
+                showMessage("Choose a valid date in this year, up to today.");
                 return;
             }
 
+            const session = getFormSession();
 
-            refreshDayButton(dateKey);
-            renderSessionList(dateKey);
-            updateSelectedDay(dateKey);
-            updateSelectedHighlight();
-            updateStatistics();
+            if (!sessionHasActivity(session)) {
+                showMessage("Enter some activity before saving.");
+                return;
+            }
 
-            clearFormFields();
+            await runActivityChange(
+                userId => supabaseClient
+                    .from("member_activity_sessions")
+                    .insert({
+                        user_id: userId,
+                        session_id: session.id,
+                        activity_date: dateKey,
+                        session_data: session
+                    }),
 
-            showMessage(
-                'Activity session added.'
+                () => {
+                    if (!activityEntries[dateKey]) {
+                        activityEntries[dateKey] = { sessions: [] };
+                    }
+
+                    activityEntries[dateKey].sessions.push(session);
+
+                    if (entryDateInput.value === dateKey) {
+                        clearFormFields();
+                    }
+                },
+
+                "Activity saved to your account."
             );
         }
 
@@ -1095,43 +1051,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        function deleteSession(
-            dateKey,
-            sessionId
-        ) {
-            const sessions =
-                getSessions(dateKey);
+       async function deleteSession(dateKey, sessionId) {
+        await runActivityChange(
+            userId => supabaseClient
+                .from("member_activity_sessions")
+                .delete()
+                .eq("user_id", userId)
+                .eq("session_id", sessionId),
 
-            activityEntries[dateKey].sessions =
-                sessions.filter(
-                    function (session) {
-                        return (
-                            session.id
-                            !== sessionId
-                        );
-                    }
+            () => {
+                const remaining = getSessions(dateKey).filter(
+                    session => session.id !== sessionId
                 );
 
+                if (remaining.length) {
+                    activityEntries[dateKey] = {
+                        sessions: remaining
+                    };
+                } else {
+                    delete activityEntries[dateKey];
+                }
+            },
 
-            if (
-                activityEntries[dateKey]
-                    .sessions.length === 0
-            ) {
-                delete activityEntries[dateKey];
-            }
-
-
-            saveEntries();
-
-            refreshDayButton(dateKey);
-            renderSessionList(dateKey);
-            updateSelectedDay(dateKey);
-            updateStatistics();
-
-            showMessage(
-                'Activity session deleted.'
-            );
-        }
+            "Activity session deleted."
+        );
+    }
 
         function createSessionSummary(session) {
             const primaryParts = [];
@@ -1571,30 +1515,44 @@ document.addEventListener('DOMContentLoaded', function () {
             settingsDialog.close();
         }
 
-        function resetWorkoutHistory() {
+        async function resetWorkoutHistory() {
+            if (!activityReady || activityBusy) return;
 
             const confirmed = confirm(
-                'Reset all workout history? This cannot be undone.'
+                `Delete all ${currentYear} workout activity from your account? ` +
+                "This cannot be undone. Monthly challenge progress " +
+                "and weight records will remain."
             );
 
-            if (!confirmed) {
-                return;
+            if (!confirmed) return;
+
+            if (settingsMessage) {
+                settingsMessage.textContent = "Deleting workout activity…";
             }
 
-            localStorage.removeItem(storageKey);
+            await runActivityChange(
+                userId => supabaseClient
+                    .from("member_activity_sessions")
+                    .delete()
+                    .eq("user_id", userId)
+                    .gte("activity_date", `${currentYear}-01-01`)
+                    .lte("activity_date", `${currentYear}-12-31`),
 
-            activityEntries = {};
+                () => {
+                    activityEntries = {};
 
-            buildHeatmap();
+                    if (settingsDialog?.open) {
+                        settingsDialog.close();
+                    }
+                },
 
-            loadSelectedDate(entryDateInput.value);
+                `${currentYear} workout activity has been reset.`
+            );
 
-            updateStatistics();
-
-            settingsMessage.textContent =
-                'Workout history has been reset.';
+            if (settingsMessage) {
+                settingsMessage.textContent = messageElement.textContent;
+            }
         }
-
     /* ==================================================
        Events
     ================================================== */
@@ -1668,7 +1626,45 @@ document.addEventListener('DOMContentLoaded', function () {
        Initialize
     ================================================== */
 
-    buildHeatmap();
+  buildHeatmap();
     setInitialDate();
+    updateStatistics();
+    updateActivityControls();
+
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_OUT") {
+            loadAccountActivity(null);
+            return;
+        }
+
+        if (
+            session?.user &&
+            session.user.id !== activityUserId
+        ) {
+            setTimeout(() => {
+                if (session.user.id !== activityUserId) {
+                    loadAccountActivity(session.user.id);
+                }
+            }, 0);
+        }
+    });
+
+    const initialActivityVersion = activityVersion;
+
+    supabaseClient.auth.getUser()
+        .then(({ data, error }) => {
+            if (activityVersion !== initialActivityVersion) return;
+            if (error) throw error;
+
+            return loadAccountActivity(data.user?.id || null);
+        })
+        .catch(error => {
+            if (activityVersion !== initialActivityVersion) return;
+
+            console.error("Activity session check failed:", error);
+            showMessage(
+                "We could not check your account. Refresh the page to retry."
+            );
+        });
 });
 
