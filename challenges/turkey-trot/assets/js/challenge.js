@@ -1288,10 +1288,6 @@ function showEnrollmentRequired() {
                 If you purchased the challenge, sign in using
                 the same email address you used at checkout.
             </p>
-
-            // <p>
-            //     <a href="../../index.html">← My Dashboard</a>
-            // </p>
         `;
 
         $("challenge-dashboard").before(notice);
